@@ -1,107 +1,72 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Appointment Booking System </title>
-    <?php
-    include 'header.php';
-    ?>
-	
-	<?php
- 
+<?php
+# do not use include 'session_include.php' or it will redirect in an infinte loop!
+session_start();
 
-class menuItem{
-    private $itemName;
-    private $description;
-    private $price;
-    
-    public function menuItem($a1,$a2,$a3)
-    {
-        $this->itemName=$a1;
-        $this->description=$a2;
-        $this->price=$a3;
-    }
-    
-    public function getItemName(){
-        return $this->itemName;
-    }
-    
-    public function getDescription()
-    {
-        return $this->description;
-    }
-    
-    public function getPrice()
-    {
-        return $this->price;
-    }
-    
-    public function setItemName($a1)
-    {
-        $this->itemName=$a1;
-    }
-    
-    public function setDescription($a1)
-    {
-        $this->description=$a1;
-    }
-    
-    public function setPrice($a1)
-    {
-        $this->price=$a1;
+function redirect(){
+    if (isset($_SESSION['usertype'])) {
+        if ($_SESSION['usertype'] == 'admin') {
+            header('Location:admin_cp.php');
+        }
+        else if ($_SESSION['usertype'] == 'teacher') {
+            header('Location:teacher_cp.php');
+        }
+        else if ($_SESSION['usertype'] == 'student') {
+            header('Location:student_cp.php');
+        }        
     }
 }
-$daysArray = Array(
-					0 => 'Sunday',
-					1 => 'Monday',
-					2 => 'Tuesday',
-					3 => 'Wednsday',
-					4 => 'Thursday',
-					5 => 'Friday',
-					6 => 'Saturday',
-					); 
+
+redirect(); # No need to login if user is already logged in!
 ?>
- <?php
-                    $todaymenuitem1 = new menuItem("Algonquin Collee",
-					                                "Freshly made all-beef patty served up with homefries", "$14");
-                    $todaymenuitem2 = new menuItem("WP Kebobs",
-					                               "Tender cuts of beef and chicken, served with your choice of side","$17");
-                ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+<?php
+include 'header.php';
 
-    <body>
-        <div id="wrapper"> 
-            
-            <nav>
-                <div id="menuItems">
-                    <ul>
-                        <li><a href="index.php">Home</a></li>
-                        <li><a href="studentLogin.php">StudentLogin</a></li>
-                        <li><a href="professorLogin.php">ProfessorLogin</a></li>						 
-                        <li><a href="professors_list.php">Admin</a></li>
-                    </ul>
-                </div>
-            </nav>
-               
-            <div id="content" class="clearfix">
-                <aside>
-                         
-						<h2> Today is <?php  echo $daysArray[date("w")];?></h2>
-                        <hr>
-                        <img src="images/burger.jpg" alt="Burger" title="Monday's Special - Burger">
-                       <?php   echo "<h3>". $todaymenuitem1->getItemName()."  </h3>"   ?>
-                        
-                </aside>
+$username = '';
 
-                <div class="main">
-                    <h1>Welcome</h1>
-                    <img src="images/dining_room.jpg" alt="Dining Room" title="The WP Eatery Dining Room" class="content_pic">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt  </p>
-                    <h2>Book your Appointment!</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do  </p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, s   </p>
-                </div><!-- End Main -->
-            </div><!-- End Content -->
-            
-        </div><!-- End Wrapper -->
-    </body>
+if (isset($_POST['submit'])) {
+    # using this variables to re-populate username so that can see what they entered if username/password pair doesn't validate
+    if (isset($_POST['username'])) $username = $_POST['username'];
+    
+    if ($username && isset($_POST['password'])) {
+        $query = 'SELECT * FROM Users WHERE id = ? AND password = ?';
+        $stmt = $db->prepare($query);
+        $stmt->bind_param("ss", $username, $_POST['password']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            $_SESSION['usertype'] = $row['UserType'];
+            $_SESSION['userid'] = $row['Id'];
+            $_SESSION['realname'] = "${row['FirstName']} {$row['LastName']}";
+            redirect();
+        }
+        else {
+            echo '<p class="red">Invalid id or password.</p>';
+        }
+    }
+    else {
+        echo '<p class="red">Please fill in all fields.</p>';
+    }
+}
+?>
+   <h1>Algonquin College Student-Teacher Appointment Scheduler</h1>
+   
+    <form method="post" action="index.php">
+        Username: <input name="username" value="<?=$username?>" required> (the first part of your Algonquin email address)<br>
+        Password: <input name="password" type="password" required><br>
+        <input name="submit" type="submit" value="Login"> <input type="reset">
+    </form>
+    
+    <p>Not registered? Register <a href="register.php">here</a>.</p>
+
+<?php
+include 'footer.php';
+?>
+</body>
 </html>
-<?php  include 'footer.php'; ?>

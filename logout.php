@@ -1,11 +1,10 @@
 <?php
 session_start();
-if(isset($_SESSION['websiteUser'])){
-    session_unset();
-    session_destroy();
-    session_start();
-    session_regenerate_id();
-} 
 
-    header('Location:Adminlogin.php');
+if (session_status() == PHP_SESSION_ACTIVE) {
+    $_SESSION = [];
+    session_destroy();
+}
+
+header('Location:index.php');
 ?>
