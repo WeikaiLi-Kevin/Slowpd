@@ -1,16 +1,15 @@
 <?php
 include 'session_include.php';
+session_check('student');
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <link href="css/business-frontpage.css" rel="stylesheet">
-    <title>Appointment Scheduler</title>
+    <title>Appointment Confirmation</title>
 <?php
 include 'header.php';
 
-$prof = $_POST["prof"];
-$stud = $_POST["stud"];
 $myappt = $_POST["appt"];
 $day = $_POST["day"];
 $mycourse = $_POST["course"];
@@ -31,12 +30,11 @@ $datetoinsert=$day;
 $datetoinsert.=" ";
 $datetoinsert.=$appttime;
 
-echo $day;
 //DATABASE MySQL
 
 $stmt = $db->prepare("INSERT INTO Appointments (TeacherId, StudentId, Appt_DateTime, Room, Reason, CourseId, Notes, Appt_Status) VALUES (?,?,?,'T306','',?,?,'pending');");
 /* bind parameters for markers */
-$stmt->bind_param("sssss", $prof, $stud, $datetoinsert, $mycourse, $mynotes);
+$stmt->bind_param("sssss", $_POST['prof'], $_SESSION['userid'], $datetoinsert, $mycourse, $mynotes);
 $stmt->execute();
 $stmt->close();
 ?>
@@ -46,10 +44,10 @@ $stmt->close();
 				<div class="row"><div class="span1"><h1>Appointment Requested</h1></div></div>
 				<p>The teacher has been notified of your request. Appointments are confirmed once you receive a confirmation email from the professor.</p>
 				<p><strong>Appointment: </strong><?php echo $datetoinsert ?></p>
-				<p><strong>Teacher: </strong><?=$_POST['prof']?></p>
-				<p><strong>Student: </strong><?=$_POST['stud']?></p>
-				<p><strong>Course: </strong><?=$_POST['course']?></p>
-				<p><strong>Notes: </strong><?=$_POST['notes']?></p>
+				<p><strong>Teacher: </strong><?=$_POST['profname']?></p>
+				<p><strong>Student: </strong><?=$_SESSION['realname']?></p>
+				<p><strong>Course: </strong><?=$mycourse?></p>
+				<p><strong>Notes: </strong><?=$mynotes?></p>
 				<br>
 				<button type="button" class="btn btn-primary" onClick="location.href='student_cp.php';">OK</button>
 

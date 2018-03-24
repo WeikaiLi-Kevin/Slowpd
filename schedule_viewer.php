@@ -1,9 +1,6 @@
 <?php
 include 'session_include.php';
-$prof = $_POST['teacher'];
-$stud = $_SESSION['userid'];
-$temp1 = file_get_contents("prefs\\$prof\\template.json");
-
+session_check('student');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,95 +15,113 @@ $temp1 = file_get_contents("prefs\\$prof\\template.json");
 <?php
 include 'header.php';
 
-//DETERMINING DAYS
-if(date("l")=="Saturday" || date("l")=="Sunday"){
-	$monday = date("mdY",strtotime("next monday"));
-	$tuesday = date("mdY",strtotime("next tuesday"));
-	$wednesday = date("mdY",strtotime("next wednesday"));
-	$thursday = date("mdY",strtotime("next thursday"));
-	$friday = date("mdY",strtotime("next friday"));
-	
-	$mon = date("m/d",strtotime("next monday"));
-	$tue = date("m/d",strtotime("next tuesday"));
-	$wed = date("m/d",strtotime("next wednesday"));
-	$thu = date("m/d",strtotime("next thursday"));
-	$fri = date("m/d",strtotime("next friday"));
-	
-	$mondayFormat = date("Y-m-d",strtotime("next monday"));
-	$tuesdayFormat = date("Y-m-d",strtotime("next tuesday"));
-	$wednesdayFormat = date("Y-m-d",strtotime("next wednesday"));
-	$thursdayFormat = date("Y-m-d",strtotime("next thursday"));
-	$fridayFormat = date("Y-m-d",strtotime("next friday"));
-	
+$prof = $_POST['teacher'];
+$stud = $_SESSION['userid'];
+$filename = "prefs\\$prof\\template.json";
 
-}else if(date("l")=="Monday" || 
-	date("l")=="Tuesday" || 
-	date("l")=="Wednesday" || date("l")=="Thursday" || 
-	date("l")=="Friday"){
-		$monday = date("mdY",strtotime("monday this week"));
-		$tuesday = date("mdY",strtotime("tuesday this week"));
-		$wednesday = date("mdY",strtotime("wednesday this week"));
-		$thursday = date("mdY",strtotime("thursday this week"));
-		$friday = date("mdY",strtotime("friday this week"));
-		
-		//For headers in table
-		$mon = date("m/d",strtotime("monday this week"));
-		$tue = date("m/d",strtotime("tuesday this week"));
-		$wed = date("m/d",strtotime("wednesday this week"));
-		$thu = date("m/d",strtotime("thursday this week"));
-		$fri = date("m/d",strtotime("friday this week"));
-		
-		//Selected date to pass to confirm window
-		$mondayFormat = date("Y-m-d",strtotime("monday this week"));
-		$tuesdayFormat = date("Y-m-d",strtotime("tuesday this week"));
-		$wednesdayFormat = date("Y-m-d",strtotime("wednesday this week"));
-		$thursdayFormat = date("Y-m-d",strtotime("thursday this week"));
-		$fridayFormat = date("Y-m-d",strtotime("friday this week"));
-	}
-	$days = array($monday, $tuesday, $wednesday, $thursday, $friday); 
-	$formattedDate = array("$mondayFormat", "$tuesdayFormat", "$wednesdayFormat", "$thursdayFormat", "$fridayFormat");
-	$today = date("m/d/Y",strtotime("today"));
-	$time = date("h:i:s",strtotime("now"));
-
-//$template = file_get_contents('template.json');
-$template = $temp1;
-$week = json_decode($template, true);
-
-//Grabbing user prefs
-$query = "SELECT Appt_Status, Appt_DateTime FROM Appointments WHERE TeacherId = ?";
+# we can be sure that teacher is in the database, else student couldn't have gotten to this page
+$query = "SELECT FirstName, LastName FROM Users WHERE Id = ?";
 $stmt = $db->prepare($query);
 $stmt->bind_param("s", $prof);
 $stmt->execute();
 $result = $stmt->get_result();
 $stmt->close();
 
-if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-		//Piece together string for JSON
-		$dbdate = $row['Appt_DateTime'];
-		$dbdate = $dbdate;
-		$newdate = strtolower(date("D", strtotime($dbdate)));
-		$dayname = strtolower(date("l", strtotime($dbdate)));
+$row = $result->fetch_assoc();
+$profName = "{$row['FirstName']} {$row['LastName']}";
 
-		$dbtime = $row['Appt_DateTime'];
-		$newtime = date("Gi", strtotime($dbtime));
-		
-		$string=$newdate.$newtime;
-		$status=$row['Appt_Status'];
-		//Configure JSON
-		if($status=="pending"){
+if (file_exists($filename)) {
 
-			if(in_array(date("mdY",strtotime($dbdate)),$days)){
-			$week[$dayname][$string]['status'] = 'pending';
-			}
-		}
+
+    $temp1 = file_get_contents($filename);
+
+    //DETERMINING DAYS
+    if(date("l")=="Saturday" || date("l")=="Sunday"){
+        $monday = date("mdY",strtotime("next monday"));
+        $tuesday = date("mdY",strtotime("next tuesday"));
+        $wednesday = date("mdY",strtotime("next wednesday"));
+        $thursday = date("mdY",strtotime("next thursday"));
+        $friday = date("mdY",strtotime("next friday"));
+
+        $mon = date("m/d",strtotime("next monday"));
+        $tue = date("m/d",strtotime("next tuesday"));
+        $wed = date("m/d",strtotime("next wednesday"));
+        $thu = date("m/d",strtotime("next thursday"));
+        $fri = date("m/d",strtotime("next friday"));
+
+        $mondayFormat = date("Y-m-d",strtotime("next monday"));
+        $tuesdayFormat = date("Y-m-d",strtotime("next tuesday"));
+        $wednesdayFormat = date("Y-m-d",strtotime("next wednesday"));
+        $thursdayFormat = date("Y-m-d",strtotime("next thursday"));
+        $fridayFormat = date("Y-m-d",strtotime("next friday"));
+    }else if(date("l")=="Monday" || 
+        date("l")=="Tuesday" || 
+        date("l")=="Wednesday" || date("l")=="Thursday" || 
+        date("l")=="Friday"){
+            $monday = date("mdY",strtotime("monday this week"));
+            $tuesday = date("mdY",strtotime("tuesday this week"));
+            $wednesday = date("mdY",strtotime("wednesday this week"));
+            $thursday = date("mdY",strtotime("thursday this week"));
+            $friday = date("mdY",strtotime("friday this week"));
+
+            //For headers in table
+            $mon = date("m/d",strtotime("monday this week"));
+            $tue = date("m/d",strtotime("tuesday this week"));
+            $wed = date("m/d",strtotime("wednesday this week"));
+            $thu = date("m/d",strtotime("thursday this week"));
+            $fri = date("m/d",strtotime("friday this week"));
+
+            //Selected date to pass to confirm window
+            $mondayFormat = date("Y-m-d",strtotime("monday this week"));
+            $tuesdayFormat = date("Y-m-d",strtotime("tuesday this week"));
+            $wednesdayFormat = date("Y-m-d",strtotime("wednesday this week"));
+            $thursdayFormat = date("Y-m-d",strtotime("thursday this week"));
+            $fridayFormat = date("Y-m-d",strtotime("friday this week"));
+        }
+        $days = array($monday, $tuesday, $wednesday, $thursday, $friday); 
+        $formattedDate = array("$mondayFormat", "$tuesdayFormat", "$wednesdayFormat", "$thursdayFormat", "$fridayFormat");
+        $today = date("m/d/Y",strtotime("today"));
+        $time = date("h:i:s",strtotime("now"));
+
+    //$template = file_get_contents('template.json');
+    $template = $temp1;
+    $week = json_decode($template, true);
+
+    //Grabbing user prefs
+    $query = "SELECT Appt_Status, Appt_DateTime FROM Appointments WHERE TeacherId = ?";
+    $stmt = $db->prepare($query);
+    $stmt->bind_param("s", $prof);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
+
+    if ($result->num_rows > 0) {
+        // output data of each row
+        while($row = $result->fetch_assoc()) {
+            //Piece together string for JSON
+            $dbdate = $row['Appt_DateTime'];
+            $dbdate = $dbdate;
+            $newdate = strtolower(date("D", strtotime($dbdate)));
+            $dayname = strtolower(date("l", strtotime($dbdate)));
+
+            $dbtime = $row['Appt_DateTime'];
+            $newtime = date("Gi", strtotime($dbtime));
+
+            $string=$newdate.$newtime;
+            $status=$row['Appt_Status'];
+            //Configure JSON
+            if($status=="pending"){
+
+                if(in_array(date("mdY",strtotime($dbdate)),$days)){
+                $week[$dayname][$string]['status'] = 'pending';
+                }
+            }
+        }
     }
-} else {
-}
-$myJSON = json_encode($week);
+    else {
+    }
+    $myJSON = json_encode($week);
 ?>
-
 <script>	
 function popupModal(e){
 			var parent_id = $(e).parent().attr('id');
@@ -176,7 +191,7 @@ daysoftheweek.forEach(function(element) {
 	<div class="container">
 		<div class="standings col-sm-12 well">
 			<div align="center" class="col-sm-12">
-				<h1>Schedule</h1>
+				<h1>Schedule for <?=$profName?></h1>
 			</div>
 			<div>			
 				<table class="table table-hover" id="standingstable">
@@ -364,28 +379,28 @@ daysoftheweek.forEach(function(element) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title" id="modaltitle">Request Appointment</h4>
       </div>
-      <div class="modal-body">
 	  <form action="confirm.php" method="post">
-	  <table>
-	  <tr><td>Professor:</td><td><?php echo "$prof" ?></td></tr>
-	  <tr><td>Student:</td><td><?php echo "$stud" ?></td></tr>
-	  <tr><td>Course:</td><td><input type="text" name="course"></td></tr>
-	  <tr><td>Date:</td><td id="date"></td></tr>
-	  
-	  </table>
-		<p>Notes:</p><textarea rows="10" cols="50" name="notes" value="notes""></textarea>
-      </div>
-	  
-      <div class="modal-footer">
-	    <!--<button type="button" class="btn btn-primary" onClick="confirmRequest()">Send Appointment Request</button>-->
-		<input type="submit" class="btn btn-primary"></button>
-		<input type="hidden" id = "appt" name="appt" value="<script>selected</script>">
-		<input type="hidden" id = "stud" name="stud" value="<?php echo "$stud"; ?>">
-		<input type="hidden" id = "prof" name="prof" value="<?php echo "$prof"; ?>">
-		<input type="hidden" id = "day" name="day" value="">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		</form>
-      </div>
+          <div class="modal-body">
+              <table>
+                  <tr><td>Professor:</td><td><?=$profName?></td></tr>
+                  <tr><td>Student:</td><td><?=$_SESSION['realname']?></td></tr>
+                  <tr><td>Course:</td><td><input type="text" name="course"></td></tr>
+                  <tr><td>Date:</td><td id="date"></td></tr>
+              </table>
+                <p>Notes:</p><textarea rows="10" cols="50" name="notes" value="notes"></textarea>
+          </div>
+
+          <div class="modal-footer">
+            <!--<button type="button" class="btn btn-primary" onClick="confirmRequest()">Send Appointment Request</button>-->
+            <input type="submit" class="btn btn-primary" value="submit">
+            <input type="hidden" id="appt" name="appt" value="<script>selected</script>">
+            <input type="hidden" id="stud" name="stud" value="<?=$stud?>">
+            <input type="hidden" id="prof" name="prof" value="<?=$prof?>">
+            <input type="hidden" id="profname" name="profname" value="<?=$profName?>">
+            <input type="hidden" id="day" name="day" value="">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </form>
     </div>
 
   </div>
@@ -393,6 +408,13 @@ daysoftheweek.forEach(function(element) {
 
 <p id="demo"></p>
 <?php
+}
+else {
+    echo "<h1>No schedule for $profName</h1>
+    
+    <p>$profName hasn't submitted his or her schedule yet. Please encourage him or her to submit a schedule so that students can book appointments.</p>";
+}
+
 include 'footer.php';
 ?>
 </body>
