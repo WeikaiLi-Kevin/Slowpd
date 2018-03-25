@@ -16,23 +16,11 @@ session_check('student');
 include 'header.php';
 
 $prof = $_POST['teacher'];
+$profName = $_POST['teachername'];
 $stud = $_SESSION['userid'];
 $filename = "prefs\\$prof\\template.json";
 
-# we can be sure that teacher is in the database, else student couldn't have gotten to this page
-$query = "SELECT FirstName, LastName FROM Users WHERE Id = ?";
-$stmt = $db->prepare($query);
-$stmt->bind_param("s", $prof);
-$stmt->execute();
-$result = $stmt->get_result();
-$stmt->close();
-
-$row = $result->fetch_assoc();
-$profName = "{$row['FirstName']} {$row['LastName']}";
-
 if (file_exists($filename)) {
-
-
     $temp1 = file_get_contents($filename);
 
     //DETERMINING DAYS
