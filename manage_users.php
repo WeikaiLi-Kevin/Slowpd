@@ -55,15 +55,31 @@ if (isset($_POST['submit'])) {
 
             while ($row = $result->fetch_assoc()) {
                 $status = $row['ConfirmationHash'] == '' ? 'Registered' : 'Pending';
+                $userName = "{$row['FirstName']} {$row['LastName']}"; # for form submission to modify or delete user page
                 
-                echo "<tr>
+                echo <<< END
+            <tr>
                 <td>{$row['Id']}</td>
-                <td>{$row['FirstName']} {$row['LastName']}</td>
+                <td>$userName</td>
                 <td>{$row['Email']}</td>
                 <td>{$row['UserType']}</td>
                 <td>$status</td>
-                <td><input type=\"button\" value=\"Modify\"> <input type=\"button\" value=\"Delete\"></td>
-            </tr>\n";
+                <td>
+                    <form method="post" action="modify_user.php">
+                        <input type="submit" name="submit" value="Modify">
+                        <input type="hidden" name="userid" value="{$row['Id']}">
+                        <input type="hidden" name="username" value="$userName">
+                        <input type="hidden" name="email" value="{$row['Email']}">
+                    </form>
+                    <form method="post" action="delete_user.php">
+                        <input type="submit" name="submit" value="Delete">
+                        <input type="hidden" name="userid" value="{$row['Id']}">
+                        <input type="hidden" name="username" value="$userName">
+                        <input type="hidden" name="email" value="{$row['Email']}">
+                    </form>
+                </td>
+            </tr>
+END;
             }
 
             echo "</table>";

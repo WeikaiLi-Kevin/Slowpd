@@ -1,6 +1,9 @@
 <?php
 include 'session_include.php';
 session_check('student');
+
+if ($_POST == [])   # page wasn't reached by POST from schedule_viewer.php
+    header('Location:student_cp.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
