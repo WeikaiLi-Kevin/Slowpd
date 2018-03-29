@@ -86,7 +86,6 @@ if (isset($_POST['submit'])) {
    </form>
    
    <p>Already registered? Return to <a href="index.php">login page</a>.</p>
-
 <?php
 include 'footer.php';
 ?>

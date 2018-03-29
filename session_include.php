@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-# if not logged in, sent to login page
+# if not logged in, send to login page
 if ($_SESSION == [])
     header('Location:index.php');
 

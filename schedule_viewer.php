@@ -42,7 +42,8 @@ if (file_exists($filename)) {
         $wednesdayFormat = date("Y-m-d",strtotime("next wednesday"));
         $thursdayFormat = date("Y-m-d",strtotime("next thursday"));
         $fridayFormat = date("Y-m-d",strtotime("next friday"));
-    }else if(date("l")=="Monday" || 
+    }
+    else if(date("l")=="Monday" || 
         date("l")=="Tuesday" || 
         date("l")=="Wednesday" || date("l")=="Thursday" || 
         date("l")=="Friday"){
@@ -88,7 +89,6 @@ if (file_exists($filename)) {
         while($row = $result->fetch_assoc()) {
             //Piece together string for JSON
             $dbdate = $row['Appt_DateTime'];
-            $dbdate = $dbdate;
             $newdate = strtolower(date("D", strtotime($dbdate)));
             $dayname = strtolower(date("l", strtotime($dbdate)));
 
@@ -99,9 +99,8 @@ if (file_exists($filename)) {
             $status=$row['Appt_Status'];
             //Configure JSON
             if($status=="pending"){
-
                 if(in_array(date("mdY",strtotime($dbdate)),$days)){
-                $week[$dayname][$string]['status'] = 'pending';
+                    $week[$dayname][$string]['status'] = 'pending';
                 }
             }
         }
@@ -118,22 +117,15 @@ function popupModal(e){
 			document.getElementById("modaltitle").innerHTML= "Request Appointment: " + parent_id;
 			var abbr=parent_id.substring(0,3);
 			console.log(parent_id.substring(0,3));
-			if(abbr=="mon"){
-				document.getElementById("date").innerHTML= "<?php echo $formattedDate[0] ?>";
-				document.getElementById('day').value="<?php echo $formattedDate[0] ?>";
-			}else if(abbr=="tue"){
-				document.getElementById("date").innerHTML= "<?php echo $formattedDate[1] ?>";	
-				document.getElementById('day').value="<?php echo $formattedDate[1] ?>";				
-			}else if(abbr=="wed"){
-				document.getElementById("date").innerHTML= "<?php echo $formattedDate[2] ?>";
-				document.getElementById('day').value="<?php echo $formattedDate[2] ?>";
-			}else if(abbr=="thu"){
-				document.getElementById("date").innerHTML= "<?php echo $formattedDate[3] ?>";
-				document.getElementById('day').value="<?php echo $formattedDate[3] ?>";
-			}else if(abbr=="fri"){
-				document.getElementById("date").innerHTML= "<?php echo $formattedDate[4] ?>";	
-				document.getElementById('day').value="<?php echo $formattedDate[4] ?>";
-			}
+    
+            $days = ['mon', 'tue', 'wed', 'thu', 'fri'];
+    
+            for ($i = 0; $i < 5; $i++) {
+                if (abbr ==  $days[$i]) {
+                    document.getElementById("date").innerHTML= "<?=$formattedDate[$i]?>";
+                    document.getElementById('day').value="<?=$formattedDate[$i]?>";
+                }
+            }
 			
 			$('#myModal').modal('show'); 
 }	
@@ -145,7 +137,7 @@ function popupModal(e){
 	$(document).ready(function(){
 
 		//Testing
-	var week = <?php echo json_encode($myJSON) ?>;
+	var week = <?=json_encode($myJSON)?>;
 	week= JSON.parse(week);
 	var monday = week.monday;
 	var tuesday = week.tuesday;
@@ -186,173 +178,173 @@ daysoftheweek.forEach(function(element) {
 					<thead>
 						<tr>
 							<th style="width: 16.66%"></th>
-							<th style="width: 16.66%"><h3><strong>Mon <?php echo $mon ?></strong></h3></th>
-							<th style="width: 16.66%"><h3><strong>Tue <?php echo $tue ?></strong></h3></th>
-							<th style="width: 16.66%"><h3><strong>Wed <?php echo $wed ?></strong></h3></th>
-							<th style="width: 16.66%"><h3><strong>Thu <?php echo $thu ?></strong></h3></th>
-							<th style="width: 16.66%"><h3><strong>Fri <?php echo $fri ?></strong></h3></th>
+							<th style="width: 16.66%"><h3><strong>Mon <?=$mon?></strong></h3></th>
+							<th style="width: 16.66%"><h3><strong>Tue <?=$tue?></strong></h3></th>
+							<th style="width: 16.66%"><h3><strong>Wed <?=$wed?></strong></h3></th>
+							<th style="width: 16.66%"><h3><strong>Thu <?=$thu?></strong></h3></th>
+							<th style="width: 16.66%"><h3><strong>Fri <?=$fri?></strong></h3></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td><strong>08:00</strong></td>
-							<td id = "mon0800"></td>
-							<td id = "tue0800"></td>
-							<td id = "wed0800"></td>
-							<td id = "thu0800"></td>
-							<td id = "fri0800"></td>
+							<td id="mon0800"></td>
+							<td id="tue0800"></td>
+							<td id="wed0800"></td>
+							<td id="thu0800"></td>
+							<td id="fri0800"></td>
 						</tr>
 						<tr>
 							<td><strong>08:30</strong></td>
-							<td id = "mon0830"></td>
-							<td id = "tue0830"></td>
-							<td id = "wed0830"></td>
-							<td id = "thu0830"></td>
-							<td id = "fri0830"></td>
+							<td id="mon0830"></td>
+							<td id="tue0830"></td>
+							<td id="wed0830"></td>
+							<td id="thu0830"></td>
+							<td id="fri0830"></td>
 						</tr>
 						<tr>
 							<td><strong>09:00</strong></td>
-							<td id = "mon0900"></td>
-							<td id = "tue0900"></td>
-							<td id = "wed0900"></td>
-							<td id = "thu0900"></td>
-							<td id = "fri0900"></td>
+							<td id="mon0900"></td>
+							<td id="tue0900"></td>
+							<td id="wed0900"></td>
+							<td id="thu0900"></td>
+							<td id="fri0900"></td>
 						</tr>
 						<tr>
 							<td><strong>09:30</strong></td>
-							<td id = "mon0930"></td>
-							<td id = "tue0930"></td>
-							<td id = "wed0930"></td>
-							<td id = "thu0930"></td>
-							<td id = "fri0930"></td>
+							<td id="mon0930"></td>
+							<td id="tue0930"></td>
+							<td id="wed0930"></td>
+							<td id="thu0930"></td>
+							<td id="fri0930"></td>
 						</tr>
 						<tr>
 							<td><strong>10:00</strong></td>
-							<td id = "mon1000"></td>
-							<td id = "tue1000"></td>
-							<td id = "wed1000"></td>
-							<td id = "thu1000"></td>
-							<td id = "fri1000"></td>
+							<td id="mon1000"></td>
+							<td id="tue1000"></td>
+							<td id="wed1000"></td>
+							<td id="thu1000"></td>
+							<td id="fri1000"></td>
 						</tr>
 						<tr>
 							<td><strong>10:30</strong></td>
-							<td id = "mon1030"></td>
-							<td id = "tue1030"></td>
-							<td id = "wed1030"></td>
-							<td id = "thu1030"></td>
-							<td id = "fri1030"></td>
+							<td id="mon1030"></td>
+							<td id="tue1030"></td>
+							<td id="wed1030"></td>
+							<td id="thu1030"></td>
+							<td id="fri1030"></td>
 						</tr>
 						<tr>
 							<td><strong>11:00</strong></td>
-							<td id = "mon1100"></td>
-							<td id = "tue1100"></td>
-							<td id = "wed1100"></td>
-							<td id = "thu1100"></td>
-							<td id = "fri1100"></td>
+							<td id="mon1100"></td>
+							<td id="tue1100"></td>
+							<td id="wed1100"></td>
+							<td id="thu1100"></td>
+							<td id="fri1100"></td>
 						</tr>
 						<tr>
 							<td><strong>11:30</strong></td>
-							<td id = "mon1130"></td>
-							<td id = "tue1130"></td>
-							<td id = "wed1130"></td>
-							<td id = "thu1130"></td>
-							<td id = "fri1130"></td>
+							<td id="mon1130"></td>
+							<td id="tue1130"></td>
+							<td id="wed1130"></td>
+							<td id="thu1130"></td>
+							<td id="fri1130"></td>
 						</tr>
 						<tr>
 							<td><strong>12:00</strong></td>
-							<td id = "mon1200"></td>
-							<td id = "tue1200"></td>
-							<td id = "wed1200"></td>
-							<td id = "thu1200"></td>
-							<td id = "fri1200"></td>
+							<td id="mon1200"></td>
+							<td id="tue1200"></td>
+							<td id="wed1200"></td>
+							<td id="thu1200"></td>
+							<td id="fri1200"></td>
 						</tr>
 						<tr>
 							<td><strong>12:30</strong></td>
-							<td id = "mon1230"></td>
-							<td id = "tue1230"></td>
-							<td id = "wed1230"></td>
-							<td id = "thu1230"></td>
-							<td id = "fri1230"></td>
+							<td id="mon1230"></td>
+							<td id="tue1230"></td>
+							<td id="wed1230"></td>
+							<td id="thu1230"></td>
+							<td id="fri1230"></td>
 						</tr>
 						<tr>
 							<td><strong>13:00</strong></td>
-							<td id = "mon1300"></td>
-							<td id = "tue1300"></td>
-							<td id = "wed1300"></td>
-							<td id = "thu1300"></td>
-							<td id = "fri1300"></td>
+							<td id="mon1300"></td>
+							<td id="tue1300"></td>
+							<td id="wed1300"></td>
+							<td id="thu1300"></td>
+							<td id="fri1300"></td>
 						</tr>
 						<tr>
 							<td><strong>13:30</strong></td>
-							<td id = "mon1330"></td>
-							<td id = "tue1330"></td>
-							<td id = "wed1330"></td>
-							<td id = "thu1330"></td>
-							<td id = "fri1330"></td>
+							<td id="mon1330"></td>
+							<td id="tue1330"></td>
+							<td id="wed1330"></td>
+							<td id="thu1330"></td>
+							<td id="fri1330"></td>
 						</tr>
 						<tr>
 							<td><strong>14:00</strong></td>
-							<td id = "mon1400"></td>
-							<td id = "tue1400"></td>
-							<td id = "wed1400"></td>
-							<td id = "thu1400"></td>
-							<td id = "fri1400"></td>
+							<td id="mon1400"></td>
+							<td id="tue1400"></td>
+							<td id="wed1400"></td>
+							<td id="thu1400"></td>
+							<td id="fri1400"></td>
 						</tr>
 						<tr>
 							<td><strong>14:30</strong></td>
-							<td id = "mon1430"></td>
-							<td id = "tue1430"></td>
-							<td id = "wed1430"></td>
-							<td id = "thu1430"></td>
-							<td id = "fri1430"></td>
+							<td id="mon1430"></td>
+							<td id="tue1430"></td>
+							<td id="wed1430"></td>
+							<td id="thu1430"></td>
+							<td id="fri1430"></td>
 						</tr>
 						<tr>
 							<td><strong>15:00</strong></td>
-							<td id = "mon1500"></td>
-							<td id = "tue1500"></td>
-							<td id = "wed1500"></td>
-							<td id = "thu1500"></td>
-							<td id = "fri1500"></td>
+							<td id="mon1500"></td>
+							<td id="tue1500"></td>
+							<td id="wed1500"></td>
+							<td id="thu1500"></td>
+							<td id="fri1500"></td>
 						</tr>
 						<tr>
 							<td><strong>15:30</strong></td>
-							<td id = "mon1530"></td>
-							<td id = "tue1530"></td>
-							<td id = "wed1530"></td>
-							<td id = "thu1530"></td>
-							<td id = "fri1530"></td>
+							<td id="mon1530"></td>
+							<td id="tue1530"></td>
+							<td id="wed1530"></td>
+							<td id="thu1530"></td>
+							<td id="fri1530"></td>
 						</tr>
 						<tr>
 							<td><strong>16:00</strong></td>
-							<td id = "mon1600"></td>
-							<td id = "tue1600"></td>
-							<td id = "wed1600"></td>
-							<td id = "thu1600"></td>
-							<td id = "fri1600"></td>
+							<td id="mon1600"></td>
+							<td id="tue1600"></td>
+							<td id="wed1600"></td>
+							<td id="thu1600"></td>
+							<td id="fri1600"></td>
 						</tr>
 						<tr>
 							<td><strong>16:30</strong></td>
-							<td id = "mon1630"></td>
-							<td id = "tue1630"></td>
-							<td id = "wed1630"></td>
-							<td id = "thu1630"></td>
-							<td id = "fri1630"></td>
+							<td id="mon1630"></td>
+							<td id="tue1630"></td>
+							<td id="wed1630"></td>
+							<td id="thu1630"></td>
+							<td id="fri1630"></td>
 						</tr>
 						<tr>
 							<td><strong>17:00</strong></td>
-							<td id = "mon1700"></td>
-							<td id = "tue1700"></td>
-							<td id = "wed1700"></td>
-							<td id = "thu1700"></td>
-							<td id = "fri1700"></td>
+							<td id="mon1700"></td>
+							<td id="tue1700"></td>
+							<td id="wed1700"></td>
+							<td id="thu1700"></td>
+							<td id="fri1700"></td>
 						</tr>
 						<tr>
 							<td><strong>17:30</strong></td>
-							<td id = "mon1730"></td>
-							<td id = "tue1730"></td>
-							<td id = "wed1730"></td>
-							<td id = "thu1730"></td>
-							<td id = "fri1730"></td>
+							<td id="mon1730"></td>
+							<td id="tue1730"></td>
+							<td id="wed1730"></td>
+							<td id="thu1730"></td>
+							<td id="fri1730"></td>
 						</tr>
 					</tbody>
 				</table>				

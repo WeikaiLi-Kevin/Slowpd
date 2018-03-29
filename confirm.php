@@ -46,7 +46,7 @@ $stmt->close();
 			<div align="center">
 				<div class="row"><div class="span1"><h1>Appointment Requested</h1></div></div>
 				<p>The teacher has been notified of your request. Appointments are confirmed once you receive a confirmation email from the professor.</p>
-				<p><strong>Appointment: </strong><?php echo $datetoinsert ?></p>
+				<p><strong>Appointment: </strong><?=$datetoinsert?></p>
 				<p><strong>Teacher: </strong><?=$_POST['profname']?></p>
 				<p><strong>Student: </strong><?=$_SESSION['realname']?></p>
 				<p><strong>Course: </strong><?=$mycourse?></p>
