@@ -2,7 +2,7 @@
 include 'session_include.php';
 session_check('admin');
 
-if ($_POST == [])   # page wasn't reached by POST from manage_users.php
+if ($_POST == [])   # page wasn't reached by POST from modify_user.php
     header('Location:admin_cp.php');
 ?>
 <!DOCTYPE html>
@@ -12,20 +12,23 @@ if ($_POST == [])   # page wasn't reached by POST from manage_users.php
     <title>Delete user</title>
 <?php
 include 'header.php';
-
+?>
+    <h1>Delete user</h1>
+<?php
 $query = "DELETE FROM Users WHERE Id = ? AND Email = ?;";
 $stmt = $db->prepare($query);
 $stmt->bind_param("ss", $_POST['userid'], $_POST['email']);
 $stmt->execute();
-$result = $stmt->get_result();
-$stmt->close();
-?>
-    <h1>Delete user</h1>
-    
-    <p><?=$_POST['userid']?> (<?=$_POST['username']?>) has been deleted.</p>
-    
+
+if ($stmt->affected_rows == 1)
+    echo "User {$_POST['userid']} has been deleted.</p>\n";
+else
+    echo "Delete of user {$_POST['userid']} failed.</p>\n";
+?>    
     <p><a href="admin_cp.php">Return to Admin Control Panel</a></p>
 <?php
+$stmt->close();
+
 include 'footer.php';
 ?>
 </body>

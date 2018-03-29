@@ -71,12 +71,6 @@ if (isset($_POST['submit'])) {
                         <input type="hidden" name="username" value="$userName">
                         <input type="hidden" name="email" value="{$row['Email']}">
                     </form>
-                    <form method="post" action="delete_user.php">
-                        <input type="submit" name="submit" value="Delete">
-                        <input type="hidden" name="userid" value="{$row['Id']}">
-                        <input type="hidden" name="username" value="$userName">
-                        <input type="hidden" name="email" value="{$row['Email']}">
-                    </form>
                 </td>
             </tr>
 END;

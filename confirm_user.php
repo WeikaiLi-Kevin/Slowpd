@@ -15,9 +15,9 @@ include 'header.php';
 ?>
     <h1>Confirm user</h1>
 <?php
-$query = "UPDATE Users SET confirmationHash = '' WHERE Id = ?;";
+$query = "UPDATE Users SET confirmationHash = '' WHERE Id = ? AND Email = ?;";
 $stmt = $db->prepare($query);
-$stmt->bind_param("s", $_POST['userid']);
+$stmt->bind_param("ss", $_POST['userid'], $_POST['email']);
 $stmt->execute();
 
 if ($stmt->affected_rows == 1)

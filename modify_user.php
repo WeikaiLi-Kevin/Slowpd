@@ -32,6 +32,7 @@ if ($result->num_rows == 1) {
     <form method="post" action="confirm_user.php">
         <input type="submit" name="submit" value="Confirm user">
         <input type="hidden" name="userid" value="<?=$row['Id']?>">
+         <input type="hidden" name="userid" value="<?=$row['Email']?>">
     </form>
 <?php
     }
@@ -57,6 +58,7 @@ if ($result->num_rows == 1) {
    <form method="post" action="delete_user.php">
          <input type="submit" name="submit" value="Delete user">
          <input type="hidden" name="userid" value="<?=$row['Id']?>">
+         <input type="hidden" name="email" value="<?=$row['Email']?>">
    </form>
 <?php
 }
