@@ -11,6 +11,8 @@ session_check('student');
 include 'header.php';
 ?>
     <h1>Welcome, <?=$_SESSION['realname']?></h1>
+    
+    <h2>Upcoming appointments</h2>
 <?php
 $query = 'SELECT a.*, b.FirstName, b.LastName FROM Appointments a JOIN Users b ON (a.TeacherId = b.Id) WHERE a.StudentID = ? AND Appt_DateTime >= CURDATE() ORDER BY Appt_DateTime;';
 $stmt = $db->prepare($query);
@@ -23,7 +25,6 @@ if ($result->num_rows == 0)
     echo "<p>You have no booked or pending appointments.</p>";
 else {
     echo "<table class=\"border\">
-    <caption>Upcoming appointments</caption>
     <tr>
         <th>Teacher</th>
         <th>Time</th>
@@ -54,7 +55,9 @@ else {
 $fname = '';
 $lname = '';
 $email = '';
-
+?>
+    <h2>Book appointments</h2>
+<?php
 if (isset($_POST['submit'])) {
     # using these variables to re-populate fields so that user doesn't have to re-enter every field if they get no search results
     if (isset($_POST['fname'])) $fname = $_POST['fname'];
