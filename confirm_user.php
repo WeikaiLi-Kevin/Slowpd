@@ -25,7 +25,7 @@ if ($stmt->affected_rows == 1)
 else
     echo "<p>Confirmation of user {$_POST['userid']} failed.</p>";
 ?>
-    <p>Return to <a href="manage_users.php">Manage Users</a>.</p>
+    <p>Return to <a href="admin_cp.php">Control Panel</a>.</p>
 <?
 $stmt->close();
 
