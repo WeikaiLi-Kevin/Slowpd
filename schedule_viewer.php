@@ -45,7 +45,7 @@ if (file_exists($filename)) {
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title" id="modaltitle">Request Appointment</h4>
       </div>
-	  <form action="confirm.php" method="post">
+	  <form action="confirm_appointment.php" method="post">
           <div class="modal-body">
               <table>
                   <tr><td>Professor:</td><td><?=$profName?></td></tr>

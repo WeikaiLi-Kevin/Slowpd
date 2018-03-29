@@ -1,4 +1,7 @@
 <?php
+if ($_GET == [])   # page wasn't reached by AJAX GET from schedule_viewer.php
+    header('Location:student_cp.php');
+
 include 'db_vars.php';
 
 $db = new mysqli($DB_HOST, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);

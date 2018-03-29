@@ -46,6 +46,8 @@ if (isset($_POST['submit'])) {
                 
                 # print successful registration page, and then end script processing
 ?>
+<h1>Registration complete</h1>
+
 <p>You have successfully registered. Go to <a href="index.php">login page</a>.</p>
 <?php
                 include 'footer.php';
