@@ -2,7 +2,7 @@
 include 'session_include.php';
 session_check('admin');
 
-if ($_POST == [])   # page wasn't reached by POST from manage_users.php
+if ($_POST == [])   # page wasn't reached by POST from admin_cp.php
     header('Location:admin_cp.php');
 ?>
 <!DOCTYPE html>
@@ -65,7 +65,7 @@ if ($result->num_rows == 1) {
 else {
     echo '<p>Something went wrong.</p>
     
-    <p>Return to <a href="manage_users.php">Manage Users</a>.</p>';
+    <p>Return to <a href="admin_cp.php">Control Panel</a>.</p>';
 }
 
 include 'footer.php';
