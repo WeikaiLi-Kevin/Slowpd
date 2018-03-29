@@ -21,13 +21,12 @@ $stud = $_SESSION['userid'];
 $filename = "prefs\\$prof\\template.json";
 
 if (file_exists($filename)) {
-    //DETERMINING DAYS
+    //determines week to show by default
     if(date("l")=="Saturday" || date("l")=="Sunday")
         $mon = strtotime("monday this week");
     else
         $mon = strtotime("next monday");
 ?>
-
 	<div class="container">
 		<div class="standings col-sm-12 well">
 			<div align="center" class="col-sm-12">
@@ -94,11 +93,9 @@ function getCalendar(){
     
 function popupModal(e){
     var parent_id = $(e).parent().attr('id');
-    console.log(parent_id);
     document.getElementById("appt").value=parent_id;
     document.getElementById("modaltitle").innerHTML= "Request Appointment: " + parent_id;
     var abbr=parent_id.substring(0,3);
-    console.log(parent_id.substring(0,3));
 
     days = ['mon', 'tue', 'wed', 'thu', 'fri'];
 
@@ -114,22 +111,16 @@ function popupModal(e){
 
     $('#myModal').modal('show'); 
 }	
-	
-//function confirmRequest(){
-//	window.location="confirm.php";
-//}
 
-	$(document).ready(function(){
-
-		//Testing
-	var week = <?=json_encode($myJSON)?>;
-	week = JSON.parse(week);
-	var monday = week.monday;
-	var tuesday = week.tuesday;
-	var wednesday = week.wednesday;
-	var thursday = week.thursday;	
-	var friday = week.friday;
-	var daysoftheweek = [monday,tuesday,wednesday,thursday,friday];
+$(document).ready(function(){
+    var week = <?=json_encode($myJSON)?>;
+    week = JSON.parse(week);
+    var monday = week.monday;
+    var tuesday = week.tuesday;
+    var wednesday = week.wednesday;
+    var thursday = week.thursday;	
+    var friday = week.friday;
+    var daysoftheweek = [monday,tuesday,wednesday,thursday,friday];
 });
 </script>
 <?php
