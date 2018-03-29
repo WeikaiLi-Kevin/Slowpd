@@ -24,53 +24,21 @@ if (file_exists($filename)) {
     $temp1 = file_get_contents($filename);
 
     //DETERMINING DAYS
-    if(date("l")=="Saturday" || date("l")=="Sunday"){
-        $monday = date("mdY",strtotime("next monday"));
-        $tuesday = date("mdY",strtotime("next tuesday"));
-        $wednesday = date("mdY",strtotime("next wednesday"));
-        $thursday = date("mdY",strtotime("next thursday"));
-        $friday = date("mdY",strtotime("next friday"));
-
-        $mon = date("m/d",strtotime("next monday"));
-        $tue = date("m/d",strtotime("next tuesday"));
-        $wed = date("m/d",strtotime("next wednesday"));
-        $thu = date("m/d",strtotime("next thursday"));
-        $fri = date("m/d",strtotime("next friday"));
-
-        $mondayFormat = date("Y-m-d",strtotime("next monday"));
-        $tuesdayFormat = date("Y-m-d",strtotime("next tuesday"));
-        $wednesdayFormat = date("Y-m-d",strtotime("next wednesday"));
-        $thursdayFormat = date("Y-m-d",strtotime("next thursday"));
-        $fridayFormat = date("Y-m-d",strtotime("next friday"));
-    }
-    else if(date("l")=="Monday" || 
-        date("l")=="Tuesday" || 
-        date("l")=="Wednesday" || date("l")=="Thursday" || 
-        date("l")=="Friday"){
-            $monday = date("mdY",strtotime("monday this week"));
-            $tuesday = date("mdY",strtotime("tuesday this week"));
-            $wednesday = date("mdY",strtotime("wednesday this week"));
-            $thursday = date("mdY",strtotime("thursday this week"));
-            $friday = date("mdY",strtotime("friday this week"));
-
-            //For headers in table
-            $mon = date("m/d",strtotime("monday this week"));
-            $tue = date("m/d",strtotime("tuesday this week"));
-            $wed = date("m/d",strtotime("wednesday this week"));
-            $thu = date("m/d",strtotime("thursday this week"));
-            $fri = date("m/d",strtotime("friday this week"));
-
-            //Selected date to pass to confirm window
-            $mondayFormat = date("Y-m-d",strtotime("monday this week"));
-            $tuesdayFormat = date("Y-m-d",strtotime("tuesday this week"));
-            $wednesdayFormat = date("Y-m-d",strtotime("wednesday this week"));
-            $thursdayFormat = date("Y-m-d",strtotime("thursday this week"));
-            $fridayFormat = date("Y-m-d",strtotime("friday this week"));
-        }
-        $days = array($monday, $tuesday, $wednesday, $thursday, $friday); 
-        $formattedDate = array("$mondayFormat", "$tuesdayFormat", "$wednesdayFormat", "$thursdayFormat", "$fridayFormat");
-        $today = date("m/d/Y",strtotime("today"));
-        $time = date("h:i:s",strtotime("now"));
+    if(date("l")=="Saturday" || date("l")=="Sunday")
+        $mon = strtotime("monday this week");
+    else
+        $mon = strtotime("next monday");
+    
+    $tue = $mon + 86400;
+    $wed = $tue + 86400;
+    $thu = $wed + 86400;
+    $fri = $thu + 86400;
+    
+    $days = [date("mdY",$mon), date("mdY",$tue), date("mdY",$wed), date("mdY",$thu), date("mdY",$fri)]; 
+    //Selected date to pass to confirm window
+    $formattedDate = array(date("Y-m-d",$mon), date("Y-m-d",$tue), date("Y-m-d",$wed), date("Y-m-d",$thu), date("Y-m-d",$fri));
+    $today = date("m/d/Y",strtotime("today"));
+    $time = date("h:i:s",strtotime("now"));
 
     //$template = file_get_contents('template.json');
     $template = $temp1;
@@ -118,14 +86,22 @@ function popupModal(e){
 			var abbr=parent_id.substring(0,3);
 			console.log(parent_id.substring(0,3));
     
-            $days = ['mon', 'tue', 'wed', 'thu', 'fri'];
-    
-            for ($i = 0; $i < 5; $i++) {
-                if (abbr ==  $days[$i]) {
-                    document.getElementById("date").innerHTML= "<?=$formattedDate[$i]?>";
-                    document.getElementById('day').value="<?=$formattedDate[$i]?>";
-                }
-            }
+			if(abbr=="mon"){
+				document.getElementById("date").innerHTML= "<?php echo $formattedDate[0] ?>";
+				document.getElementById('day').value="<?php echo $formattedDate[0] ?>";
+			}else if(abbr=="tue"){
+				document.getElementById("date").innerHTML= "<?php echo $formattedDate[1] ?>";	
+				document.getElementById('day').value="<?php echo $formattedDate[1] ?>";				
+			}else if(abbr=="wed"){
+				document.getElementById("date").innerHTML= "<?php echo $formattedDate[2] ?>";
+				document.getElementById('day').value="<?php echo $formattedDate[2] ?>";
+			}else if(abbr=="thu"){
+				document.getElementById("date").innerHTML= "<?php echo $formattedDate[3] ?>";
+				document.getElementById('day').value="<?php echo $formattedDate[3] ?>";
+			}else if(abbr=="fri"){
+				document.getElementById("date").innerHTML= "<?php echo $formattedDate[4] ?>";	
+				document.getElementById('day').value="<?php echo $formattedDate[4] ?>";
+			}
 			
 			$('#myModal').modal('show'); 
 }	
@@ -173,16 +149,16 @@ daysoftheweek.forEach(function(element) {
 			<div align="center" class="col-sm-12">
 				<h1>Schedule for <?=$profName?></h1>
 			</div>
-			<div>			
+			<div id="ajax_table">
 				<table class="table table-hover" id="standingstable">
 					<thead>
 						<tr>
 							<th style="width: 16.66%"></th>
-							<th style="width: 16.66%"><h3><strong>Mon <?=$mon?></strong></h3></th>
-							<th style="width: 16.66%"><h3><strong>Tue <?=$tue?></strong></h3></th>
-							<th style="width: 16.66%"><h3><strong>Wed <?=$wed?></strong></h3></th>
-							<th style="width: 16.66%"><h3><strong>Thu <?=$thu?></strong></h3></th>
-							<th style="width: 16.66%"><h3><strong>Fri <?=$fri?></strong></h3></th>
+							<th style="width: 16.66%"><h3><strong>Mon <?=date("m/d", $mon)?></strong></h3></th>
+							<th style="width: 16.66%"><h3><strong>Tue <?=date("m/d", $tue)?></strong></h3></th>
+							<th style="width: 16.66%"><h3><strong>Wed <?=date("m/d", $wed)?></strong></h3></th>
+							<th style="width: 16.66%"><h3><strong>Thu <?=date("m/d", $thu)?></strong></h3></th>
+							<th style="width: 16.66%"><h3><strong>Fri <?=date("m/d", $fri)?></strong></h3></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -347,7 +323,7 @@ daysoftheweek.forEach(function(element) {
 							<td id="fri1730"></td>
 						</tr>
 					</tbody>
-				</table>				
+				</table>
 			</div>
 		</div>
 <div id="myModal" class="modal fade" role="dialog">
