@@ -34,9 +34,7 @@ if (file_exists($filename)) {
     $thu = $wed + 86400;
     $fri = $thu + 86400;
     
-    $days = [date("mdY",$mon), date("mdY",$tue), date("mdY",$wed), date("mdY",$thu), date("mdY",$fri)]; 
-    $today = date("m/d/Y",strtotime("today"));
-    $time = date("h:i:s",strtotime("now"));
+    $days = [date("mdY",$mon), date("mdY",$tue), date("mdY",$wed), date("mdY",$thu), date("mdY",$fri)];
 
     //$template = file_get_contents('template.json');
     $template = $temp1;
@@ -55,16 +53,11 @@ if (file_exists($filename)) {
         while($row = $result->fetch_assoc()) {
             //Piece together string for JSON
             $dbdate = $row['Appt_DateTime'];
-            $newdate = strtolower(date("D", strtotime($dbdate)));
+
             $dayname = strtolower(date("l", strtotime($dbdate)));
-
-            $dbtime = $row['Appt_DateTime'];
-            $newtime = date("Gi", strtotime($dbtime));
-
-            $string=$newdate.$newtime;
-            $status=$row['Appt_Status'];
+            $string=strtolower(date("DGi", strtotime($dbdate)));
             //Configure JSON
-            if($status=="pending"){
+            if ($row['Appt_Status'] == "pending"){
                 if(in_array(date("mdY",strtotime($dbdate)),$days)){
                     $week[$dayname][$string]['status'] = 'pending';
                 }
@@ -112,7 +105,7 @@ function popupModal(e){
 
 		//Testing
 	var week = <?=json_encode($myJSON)?>;
-	week= JSON.parse(week);
+	week = JSON.parse(week);
 	var monday = week.monday;
 	var tuesday = week.tuesday;
 	var wednesday = week.wednesday;
