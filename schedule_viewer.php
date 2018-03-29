@@ -35,8 +35,6 @@ if (file_exists($filename)) {
     $fri = $thu + 86400;
     
     $days = [date("mdY",$mon), date("mdY",$tue), date("mdY",$wed), date("mdY",$thu), date("mdY",$fri)]; 
-    //Selected date to pass to confirm window
-    $formattedDate = array(date("Y-m-d",$mon), date("Y-m-d",$tue), date("Y-m-d",$wed), date("Y-m-d",$thu), date("Y-m-d",$fri));
     $today = date("m/d/Y",strtotime("today"));
     $time = date("h:i:s",strtotime("now"));
 
@@ -87,20 +85,20 @@ function popupModal(e){
 			console.log(parent_id.substring(0,3));
     
 			if(abbr=="mon"){
-				document.getElementById("date").innerHTML= "<?php echo $formattedDate[0] ?>";
-				document.getElementById('day').value="<?php echo $formattedDate[0] ?>";
+				document.getElementById("date").innerHTML= "<?=date("Y-m-d",$mon)?>";
+				document.getElementById('day').value="<?=date("Y-m-d",$mon)?>";
 			}else if(abbr=="tue"){
-				document.getElementById("date").innerHTML= "<?php echo $formattedDate[1] ?>";	
-				document.getElementById('day').value="<?php echo $formattedDate[1] ?>";				
+				document.getElementById("date").innerHTML= "<?=date("Y-m-d",$tue)?>";	
+				document.getElementById('day').value="<?=date("Y-m-d",$tue)?>";				
 			}else if(abbr=="wed"){
-				document.getElementById("date").innerHTML= "<?php echo $formattedDate[2] ?>";
-				document.getElementById('day').value="<?php echo $formattedDate[2] ?>";
+				document.getElementById("date").innerHTML= "<?=date("Y-m-d",$wed)?>";
+				document.getElementById('day').value="<?=date("Y-m-d",$wed)?>";
 			}else if(abbr=="thu"){
-				document.getElementById("date").innerHTML= "<?php echo $formattedDate[3] ?>";
-				document.getElementById('day').value="<?php echo $formattedDate[3] ?>";
+				document.getElementById("date").innerHTML= "<?=date("Y-m-d",$thu)?>";
+				document.getElementById('day').value="<?=date("Y-m-d",$thu)?>";
 			}else if(abbr=="fri"){
-				document.getElementById("date").innerHTML= "<?php echo $formattedDate[4] ?>";	
-				document.getElementById('day').value="<?php echo $formattedDate[4] ?>";
+				document.getElementById("date").innerHTML= "<?=date("Y-m-d",$fri)?>";	
+				document.getElementById('day').value="<?=date("Y-m-d",$fri)?>";
 			}
 			
 			$('#myModal').modal('show'); 
