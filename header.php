@@ -8,10 +8,7 @@
 
 <body class="bg-success">
 <?php
-$DB_HOST = "localhost";
-$DB_USERNAME = "root"; 
-$DB_PASSWORD = "mysql";
-$DB_DATABASE = "slowpd"; 
+include 'db_vars.php';
 
 $db = new mysqli($DB_HOST, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
 $db->set_charset("utf8");
