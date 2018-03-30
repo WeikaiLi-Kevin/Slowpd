@@ -13,7 +13,11 @@ include 'header.php';
     <h1>Welcome, <?=$_SESSION['realname']?></h1>
     
     <h2>Manage users</h2>
-<?php    
+<?php
+$fname = '';
+$lname = '';
+$email = '';
+
 if (isset($_POST['submit'])) {
     # using these variables to re-populate fields so that user doesn't have to re-enter every field if they forget to pick a usertype or no search results
     if (isset($_POST['fname'])) $fname = $_POST['fname'];
