@@ -9,8 +9,8 @@ $db->set_charset("utf8");
 
 
 # calling page provides Monday for week to check
-$mon = $_GET['date'];
-$tue = $mon + 86400;
+$mon = $_GET['date'];   # date in seconds from Unix epoch
+$tue = $mon + 86400;    # 86400 seconds per day
 $wed = $tue + 86400;
 $thu = $wed + 86400;
 $fri = $thu + 86400;
@@ -69,7 +69,7 @@ for ($hour = 8; $hour < 18; $hour++) {
                 <td><strong>%02d:%02d</strong></td>", $hour, $minute);
         
         for ($day = 0; $day < 5; $day++) {
-            $status = $week[$daynames[$day]][sprintf("%s%02d%02d", substr($daynames[$day], 0, 3), $hour, $minute)][status];
+            $status = $week[$daynames[$day]][sprintf("%s%02d%02d", substr($daynames[$day], 0, 3), $hour, $minute)]['status'];
             if ($status == '')
                 $button = '<button type="button" class="btn-sm btn-primary btncheck" onClick="popupModal(this)">Request Appt</button>';
             else if ($status == 'pending')
