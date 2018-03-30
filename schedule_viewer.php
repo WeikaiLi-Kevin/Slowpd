@@ -27,52 +27,51 @@ if (file_exists($filename)) {
     else
         $mon = strtotime("next monday");
 ?>
-	<div class="container">
-		<div class="standings col-sm-12 well">
-			<div align="center" class="col-sm-12">
-				<h1>Schedule for <?=$profName?></h1>
-				<input type="button" value="Previous week" onclick="monday -= 604800000; getCalendar();"> <input type="button" value="Next week" onclick="monday += 604800000; getCalendar(); loadPage();">
-			</div>
-			<div id="ajax_table">
-			</div>
-		</div>
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title" id="modaltitle">Request Appointment</h4>
-      </div>
-	  <form action="confirm_appointment.php" method="post">
-          <div class="modal-body">
-              <table>
-                  <tr><td>Professor:</td><td><?=$profName?></td></tr>
-                  <tr><td>Student:</td><td><?=$_SESSION['realname']?></td></tr>
-                  <tr><td>Course:</td><td><input type="text" name="course"></td></tr>
-                  <tr><td>Date:</td><td id="date"></td></tr>
-              </table>
-                <p>Notes:</p><textarea rows="10" cols="50" name="notes" value="notes"></textarea>
-          </div>
-
-          <div class="modal-footer">
-            <!--<button type="button" class="btn btn-primary" onClick="confirmRequest()">Send Appointment Request</button>-->
-            <input type="submit" class="btn btn-primary" value="submit">
-            <input type="hidden" id="appt" name="appt" value="<script>selected</script>">
-            <input type="hidden" id="stud" name="stud" value="<?=$stud?>">
-            <input type="hidden" id="prof" name="prof" value="<?=$prof?>">
-            <input type="hidden" id="profname" name="profname" value="<?=$profName?>">
-            <input type="hidden" id="day" name="day" value="">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <div class="container">
+        <div class="standings col-sm-12 well">
+            <div align="center" class="col-sm-12">
+                <h1>Schedule for <?=$profName?></h1>
+                <input type="button" value="Previous week" onclick="monday -= 604800000; getCalendar();"> 
+                <input type="button" value="Next week" onclick="monday += 604800000; getCalendar(); loadPage();">
+            </div>
+        <div id="ajax_table">
         </div>
-    </form>
     </div>
+    
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="modaltitle">Request Appointment</h4>
+                </div>
+                <form action="confirm_appointment.php" method="post">
+                    <div class="modal-body">
+                        <table>
+                            <tr><td>Professor:</td><td><?=$profName?></td></tr>
+                            <tr><td>Student:</td><td><?=$_SESSION['realname']?></td></tr>
+                            <tr><td>Course:</td><td><input type="text" name="course"></td></tr>
+                            <tr><td>Date:</td><td id="date"></td></tr>
+                        </table>
+                        <p>Notes:</p><textarea rows="10" cols="50" name="notes" value="notes"></textarea>
+                    </div>
 
-  </div>
-</div>
+                    <div class="modal-footer">
+                        <!--<button type="button" class="btn btn-primary" onClick="confirmRequest()">Send Appointment Request</button>-->
+                        <input type="submit" class="btn btn-primary" value="submit">
+                        <input type="hidden" id="appt" name="appt" value="<script>selected</script>">
+                        <input type="hidden" id="stud" name="stud" value="<?=$stud?>">
+                        <input type="hidden" id="prof" name="prof" value="<?=$prof?>">
+                        <input type="hidden" id="profname" name="profname" value="<?=$profName?>">
+                        <input type="hidden" id="day" name="day" value="">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
 
-<p id="demo"></p>
+        </div>
+    </div>
 
 <script>	
 // super important variable! monday is what we use to move forward and backwards through the calendar.
@@ -110,18 +109,7 @@ function popupModal(e){
     }
 
     $('#myModal').modal('show'); 
-}	
-
-$(document).ready(function(){
-    var week = <?=json_encode($myJSON)?>;
-    week = JSON.parse(week);
-    var monday = week.monday;
-    var tuesday = week.tuesday;
-    var wednesday = week.wednesday;
-    var thursday = week.thursday;	
-    var friday = week.friday;
-    var daysoftheweek = [monday,tuesday,wednesday,thursday,friday];
-});
+}
 </script>
 <?php
 }
