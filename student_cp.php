@@ -10,9 +10,10 @@ session_check('student');
 <?php
 include 'header.php';
 ?>
+<div class="container well" align="center">
     <h1>Welcome, <?=$_SESSION['realname']?></h1>
     
-    <h2>Upcoming appointments</h2>
+    <h3>Upcoming appointments</h3>
 <?php
 $query = 'SELECT a.*, b.FirstName, b.LastName FROM Appointments a JOIN Users b ON (a.TeacherId = b.Id) WHERE a.StudentID = ? AND Appt_DateTime >= CURDATE() ORDER BY Appt_DateTime;';
 $stmt = $db->prepare($query);
@@ -56,7 +57,7 @@ $fname = '';
 $lname = '';
 $email = '';
 ?>
-    <h2>Book appointments</h2>
+    <h3>Book appointments</h3>
 <?php
 if (isset($_POST['submit'])) {
     # using these variables to re-populate fields so that user doesn't have to re-enter every field if they get no search results
@@ -105,12 +106,14 @@ if (isset($_POST['submit'])) {
    <p>Search for teachers by first name, last name, or email.</p>
     
      <form method="post" action="student_cp.php">
-        <p>First name: <input name="fname" value="<?=$fname?>"><br>
-        Last name: <input name="lname" value="<?=$lname?>"><br>
-        Email address: <input name="email" type="email" value="<?=$email?>"></p>
-            
+	 <table>
+        <tr><td>First name: </td><td><input name="fname" value="<?=$fname?>"></td></tr>
+        <tr><td>Last name: </td><td><input name="lname" value="<?=$lname?>"></td></tr>
+        <tr><td>Email address: </td><td><input name="email" type="email" value="<?=$email?>"></td></tr>
+     </table>       
         <input name="submit" type="submit"> <input type="reset">
     </form>
+</div>
     
 <?php
 include 'footer.php';
