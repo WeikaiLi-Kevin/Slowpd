@@ -24,6 +24,7 @@ if (!file_exists($filename)) {
 <?php
 }
 ?>
+    <h2 style="font-weight: bold ;color:#026342">Upcoming appointments</h2>
 <?php
 $query = 'SELECT a.*, b.FirstName, b.LastName FROM Appointments a JOIN Users b ON (a.StudentId = b.Id) WHERE a.TeacherID = ? AND Appt_DateTime >= CURDATE() ORDER BY Appt_DateTime;';
 $stmt = $db->prepare($query);

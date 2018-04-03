@@ -13,6 +13,7 @@ include 'header.php';
 <div class="container well" align="center">
     <h1 style="font-weight: bold ;">Welcome, <?=$_SESSION['realname']?></h1>
     
+    <h2 style="font-weight: bold ;color:#026342">Upcoming appointments</h2>
 <?php
 $query = 'SELECT a.*, b.FirstName, b.LastName FROM Appointments a JOIN Users b ON (a.TeacherId = b.Id) WHERE a.StudentID = ? AND Appt_DateTime >= CURDATE() ORDER BY Appt_DateTime;';
 $stmt = $db->prepare($query);

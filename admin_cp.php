@@ -13,7 +13,7 @@ include 'header.php';
 <div class="container well" align="center">
     <h1>Welcome, <?=$_SESSION['realname']?></h1>
     
-    <h2>Manage users</h2>
+    <h2 style="font-weight: bold ;color:#026342">Manage users</h2>
 <?php
 $fname = '';
 $lname = '';
