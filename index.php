@@ -56,17 +56,21 @@ if (isset($_POST['submit'])) {
 }
 ?>
 <div class="container well" align="center">
-   <h1>Algonquin College Student-Teacher Appointment Scheduler</h1>
-   
+   <h1 style="font-family: verdana">Algonquin College Student-Teacher Appointment Scheduler</h1>
+   <br>
     <form method="post" action="index.php">
 	<table>
-        <tr><td>Username: </td><td><input name="username" value="<?=$username?>" required></td></tr>
-        <tr><td>Password: </td><td><input name="password" type="password" required></td></tr>
+        <tr><td style="font-weight: bold ; font-size: 20px">Username: </td><td><input name="username" class="form-control" value="<?=$username?>" required></td></tr>
+		<tr><td style="font-weight: bold; font-size: 20px">Password: </td><td><input name="password" class="form-control" type="password" required></td></tr>
 	</table>
-	<input name="submit" type="submit" value="Login"> <input type="reset">
+	<br>
+	<input name="submit" class="btn btn-success" type="submit" value="Login"> <input class="btn btn-success" type="reset">
     </form>
     
     <p>Not registered? Register <a href="register.php">here</a>.</p>
+	
+	
+	
 </div>
 <?php
 include 'footer.php';

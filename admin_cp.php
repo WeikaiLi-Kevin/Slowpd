@@ -10,6 +10,7 @@ session_check('admin');
 <?php
 include 'header.php';
 ?>
+<div class="container well" align="center">
     <h1>Welcome, <?=$_SESSION['realname']?></h1>
     
     <h2>Manage users</h2>
@@ -89,20 +90,22 @@ END;
    <p>Search for users by first name, last name, or email.</p>
     
      <form method="post" action="admin_cp.php">
-       <input type="checkbox" name="students" id="students"><label for="students">Students</label>
-       <input type="checkbox" name="teachers"><label for="teachers">Teachers</label>
-       <input type="checkbox" name="admins"><label for="admins">Administrators</label>
+       <label class="checkbox-inline" for="students"><input type="checkbox" name="students" id="students">Students</label>
+       <label class="checkbox-inline" for="teachers"><input type="checkbox" name="teachers">Teachers</label>
+       <label class="checkbox-inline" for="admins"><input type="checkbox" name="admins">Administrators</label>
        
-        <p>First name: <input name="fname" value="<?=$fname?>"><br>
-        Last name: <input name="lname" value="<?=$lname?>"><br>
-        Email address: <input name="email" type="email" value="<?=$email?>"></p>
-            
-        <input name="submit" type="submit"> <input type="reset">
+        
+        <table>
+        <tr><td style="font-weight: bold ;">First name: </td><td><input class="form-control" name="fname" value="<?=$fname?>"></td></tr>
+        <tr><td style="font-weight: bold ;">Last name: </td><td><input class="form-control" name="lname" value="<?=$lname?>"></td></tr>
+        <tr><td style="font-weight: bold ;">Email address: </td><td><input class="form-control" name="email" type="email" value="<?=$email?>"></td></tr>
+     </table>     
+        <input class="btn btn-success" name="submit" type="submit"> <input class="btn btn-success" type="reset">
     </form>
     
-    <h2> Create users</h2>
-    <p><a href="create_users.php">Create users</a></p>
-
+    <h2 style="font-weight: bold ;color:#026342"> Create users</h2>
+    <p><a style="font-weight: bold ;color:#026342" href="create_users.php">Create users</a></p>
+</div>
 <?php
 include 'footer.php';
 ?>

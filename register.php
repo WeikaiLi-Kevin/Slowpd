@@ -71,23 +71,35 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
+<div class="container well" align="center">
    <h1>Student-Teacher Appointment Scheduler Registration</h1>
-   
-   <form method="post" action="register.php">
-       First name: <input name="fname" value="<?=$fname?>" required><br>
-       Last name: <input name="lname" value="<?=$lname?>" required><br>
-       Email address: <input name="email" maxlength="8" value="<?=$email?>" required>@
+
+   <form  method="post" action="register.php">
+
+       
+	   
+	   
+	   
+	   	<table>
+			<tr><td style="font-weight: bold ;">First name: </td><td><input class="form-control" name="fname" value="<?=$fname?>" required></td></tr>
+			<tr><td style="font-weight: bold ;">Last name: </td><td><input class="form-control" name="lname" value="<?=$lname?>" required></td></tr>
+			<tr><td style="font-weight: bold ;">Email address: </td><td><input class="form-control" name="email" maxlength="8"  value="<?=$email?>" required>@
        <select name="emaildomain" required>
-          <option value="">-- Select email domain --</option>
+		   <option value="">-- Select email domain --</option>
            <option value="algonquinlive.com"<? if ($emaildomain == 'algonquinlive.com') echo " selected"; ?>>algonquinlive.com (student)</option>
            <option value="algonquincollege.com"<? if ($emaildomain == 'algonquincollege.com') echo " selected"; ?>>algonquincollege.com (teacher)</option>
-       </select><br>
-       Password: <input type="password" name="password1" required><br>
-       Re-type password: <input type="password" name="password2" required><br>
-       <input type="submit" name="submit"> <input type="reset">
+       </select></td></tr>
+	   
+			<tr><td style="font-weight: bold ;">Password: </td><td><input class="form-control" type="password" name="password1" required></td></tr>
+			<tr><td style="font-weight: bold ;">Re-type password: </td><td><input class="form-control" type="password" name="password2" required></td></tr>
+		 </table> 
+		 <br>
+		 <input class="btn btn-success" type="submit" name="submit"> <input class="btn btn-success" type="reset">
    </form>
-   
+  
+	<br>
    <p>Already registered? Return to <a href="index.php">login page</a>.</p>
+</div>
 <?php
 include 'footer.php';
 ?>

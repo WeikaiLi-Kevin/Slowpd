@@ -11,9 +11,8 @@ session_check('student');
 include 'header.php';
 ?>
 <div class="container well" align="center">
-    <h1>Welcome, <?=$_SESSION['realname']?></h1>
+    <h1 style="font-weight: bold ;">Welcome, <?=$_SESSION['realname']?></h1>
     
-    <h3>Upcoming appointments</h3>
 <?php
 $query = 'SELECT a.*, b.FirstName, b.LastName FROM Appointments a JOIN Users b ON (a.TeacherId = b.Id) WHERE a.StudentID = ? AND Appt_DateTime >= CURDATE() ORDER BY Appt_DateTime;';
 $stmt = $db->prepare($query);
@@ -25,7 +24,7 @@ $stmt->close();
 if ($result->num_rows == 0)
     echo "<p>You have no booked or pending appointments.</p>";
 else {
-    echo "<table class=\"border\">
+    echo "<table class=\"table table-bordered\">
     <tr>
         <th>Teacher</th>
         <th>Time</th>
@@ -46,7 +45,7 @@ else {
         <td>{$row['CourseID']}</td>
         <td>{$row['Notes']}</td>
         <td>{$row['Appt_Status']}</td>
-        <td><input type=\"button\" value=\"Cancel\"></td>
+        <td><input class=\"btn btn-light\" type=\"button\" value=\"Cancel\"></td>
     </tr>\n";
     }
 
@@ -57,7 +56,7 @@ $fname = '';
 $lname = '';
 $email = '';
 ?>
-    <h3>Book appointments</h3>
+    <h3 style="font-weight: bold ;color: #026342">Book appointments</h3>
 <?php
 if (isset($_POST['submit'])) {
     # using these variables to re-populate fields so that user doesn't have to re-enter every field if they get no search results
@@ -76,7 +75,7 @@ if (isset($_POST['submit'])) {
         if ($result->num_rows == 0)
             echo "<p>No users matched your search.</p>";
         else {
-            echo "<table class=\"border\">
+            echo "<table class=\"table table-bordered\">
             <caption>Search Results</caption>
             <tr>
                 <th>Name</th>
@@ -107,11 +106,12 @@ if (isset($_POST['submit'])) {
     
      <form method="post" action="student_cp.php">
 	 <table>
-        <tr><td>First name: </td><td><input name="fname" value="<?=$fname?>"></td></tr>
-        <tr><td>Last name: </td><td><input name="lname" value="<?=$lname?>"></td></tr>
-        <tr><td>Email address: </td><td><input name="email" type="email" value="<?=$email?>"></td></tr>
-     </table>       
-        <input name="submit" type="submit"> <input type="reset">
+        <tr><td style="font-weight: bold ;">First name: </td><td><input class="form-control" name="fname" value="<?=$fname?>"></td></tr>
+        <tr><td style="font-weight: bold ;">Last name: </td><td><input class="form-control" name="lname" value="<?=$lname?>"></td></tr>
+        <tr><td style="font-weight: bold ;">Email address: </td><td><input class="form-control" name="email" type="email" value="<?=$email?>"></td></tr>
+     </table> 
+	 <br>
+        <input class="btn btn-success" name="submit" type="submit"> <input class="btn btn-success" type="reset">
     </form>
 </div>
     

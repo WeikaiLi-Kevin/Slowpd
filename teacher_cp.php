@@ -10,6 +10,7 @@ session_check('teacher');
 <?php
 include 'header.php';
 ?>
+<div class="container well" align="center">
     <h1>Welcome, <?=$_SESSION['realname']?></h1>
 <?php
     
@@ -23,7 +24,6 @@ if (!file_exists($filename)) {
 <?php
 }
 ?>
-    <h2>Upcoming appointments</h2>
 <?php
 $query = 'SELECT a.*, b.FirstName, b.LastName FROM Appointments a JOIN Users b ON (a.StudentId = b.Id) WHERE a.TeacherID = ? AND Appt_DateTime >= CURDATE() ORDER BY Appt_DateTime;';
 $stmt = $db->prepare($query);
@@ -35,7 +35,7 @@ $stmt->close();
 if ($result->num_rows == 0)
     echo "<p>You have no booked or pending appointments.</p>";
 else {
-    echo "<table class=\"border\">
+    echo "<table class=\"table table-bordered\">
     <tr>
         <th>Student</th>
         <th>Time</th>
@@ -61,9 +61,10 @@ else {
     echo "</table>";
 }
 ?>
-
+</div>
 <?php
 include 'footer.php';
 ?>
+
 </body>
 </html>
