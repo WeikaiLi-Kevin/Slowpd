@@ -13,6 +13,7 @@ if ($_POST == [])   # page wasn't reached by POST from modify_user.php
 <?php
 include 'header.php';
 ?>
+<div class="container well" align="center">
     <h1>Confirm user</h1>
 <?php
 $query = "UPDATE Users SET confirmationHash = '' WHERE Id = ? AND Email = ?;";
@@ -26,6 +27,7 @@ else
     echo "<p>Confirmation of user {$_POST['userid']} failed.</p>";
 ?>
     <p>Return to <a href="admin_cp.php">Control Panel</a>.</p>
+</div>
 <?
 $stmt->close();
 

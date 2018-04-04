@@ -13,6 +13,7 @@ if ($_POST == [])   # page wasn't reached by POST from student_cp.php
 <?php
 include 'header.php';
 ?>
+<div class="container well" align="center">
   <h1>Cancel appointment</h1>
 <?php
 $query = 'DELETE FROM Appointments WHERE Id = ?';
@@ -28,9 +29,10 @@ else
 $stmt->close();
 $_POST = [];
 
-echo '<p>Return to <a href="student_cp.php">Control Panel</a>.</p>';
+echo '<p>Return to <a href="student_cp.php">Control Panel</a>.</p>
+</div>';
 
 include 'footer.php';
-?>    
+?>
 </body>
 </html>
