@@ -5,7 +5,9 @@
     <title>User registration</title>
 <?php
 include 'header.php';
-
+?>
+<div class="container well" align="center">
+<?php
 $fname = '';
 $lname = '';
 $email = '';
@@ -118,7 +120,6 @@ else if (isset($_POST['submit'])) {
     }
 }
 ?>
-<div class="container well" align="center">
    <h1>Student-Teacher Appointment Scheduler Registration</h1>
 
    <form method="post" action="register.php">
