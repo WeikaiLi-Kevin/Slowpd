@@ -6,7 +6,6 @@ session_check('student');
 <html lang="en">
 <head>
     <title>Appointment Scheduler</title>
-    <link href="css/business-frontpage.css" rel="stylesheet">
 <style>
 	td {
    height: 51px;
@@ -75,7 +74,6 @@ if (file_exists($filename)) {
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 
@@ -88,9 +86,8 @@ function getCalendar(){
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange=function() {
-        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200)
             document.getElementById('ajax_table').innerHTML = xmlhttp.responseText;
-        }
     }
     xmlhttp.open("GET", 'get_schedule.php?date=' + Math.floor(monday/1000) + '&prof=<?=$prof?>', true); // have to convert from milliseconds back to seconds
     xmlhttp.send();
@@ -98,8 +95,8 @@ function getCalendar(){
     
 function popupModal(e){
     var parent_id = $(e).parent().attr('id');
-    document.getElementById("appt").value=parent_id;
-    document.getElementById("modaltitle").innerHTML= "Request Appointment: " + parent_id;
+    $('#appt').val(parent_id);
+    $('#modaltitle').html("Request Appointment: " + parent_id);
     var abbr=parent_id.substring(0,3);
 
     days = ['mon', 'tue', 'wed', 'thu', 'fri'];
@@ -109,8 +106,8 @@ function popupModal(e){
             date = new Date(monday + (i * 86400000)); // gets milliseconds from epoch for selected day
             ymd = date.toISOString().substring(0,10); // converts '2018-03-29T06:08:16.352Z' to '2018-03-29'
 
-            document.getElementById('date').innerHTML = ymd;
-            document.getElementById('day').value = ymd;
+            $('#date').html(ymd);
+            $('#day').val(ymd);
         }
     }
 
