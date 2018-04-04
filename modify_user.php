@@ -13,6 +13,7 @@ if ($_POST == [])   # page wasn't reached by POST from admin_cp.php
 <?php
 include 'header.php';
 ?>
+<div class="container well" align="center">
     <h1>Modify user</h1>
 <?php
 $query = "SELECT * FROM Users WHERE Id = ? AND Email = ?;";
@@ -61,6 +62,7 @@ if ($result->num_rows == 1) {
          <input type="hidden" name="userid" value="<?=$row['Id']?>">
          <input type="hidden" name="email" value="<?=$row['Email']?>">
    </form>
+</div>
 <?php
 }
 else {
