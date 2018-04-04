@@ -51,7 +51,7 @@ if ($result->num_rows > 0) {
 $myJSON = json_encode($week);
 ?>
             <div align="center" class="col-sm-12">
-                <h1>Schedule for <?=$profName?></h1>
+                <h1>Schedule for <?=$_GET['profname']?></h1>
                 <input type="button" class="btn btn-light" value="Previous week"<? if ($mon > time()) {?> onclick="monday -= 604800000; getCalendar();"<?} else {?> disabled<?}?>> 
                 <input type="button" class="btn btn-light" value="Next week" onclick="monday += 604800000; getCalendar();">
             </div>
@@ -76,7 +76,10 @@ for ($hour = 8; $hour < 18; $hour++) {
         
         for ($day = 0; $day < 5; $day++) {
             $status = $week[$daynames[$day]][sprintf("%s%02d%02d", substr($daynames[$day], 0, 3), $hour, $minute)]['status'];
-            if ($status == '')
+            $time = $mon + (86400 * $day) + (3600 * $hour) + (60 * $minute);
+            if ($time < time())
+                $button = '<strong style="color: maroon">Past</strong>';
+            else if ($status == '')
                 $button = '<button type="button" class="btn-sm btn-primary btncheck" onclick="popupModal(this)">Request Appt</button>';
             else if ($status == 'pending')
                 $button = '<strong style="color: green">Pending</strong>';

@@ -10,6 +10,7 @@
 
 <body class="bg-success">
 <?php
+date_default_timezone_set('America/Toronto');
 include 'db_vars.php';
 
 $db = new mysqli($DB_HOST, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
