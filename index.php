@@ -24,7 +24,12 @@ redirect(); # No need to login if user is already logged in!
     <title>Login</title>
 <?php
 include 'header.php';
-
+?>
+<div class="container well" align="center">
+   <h1 style="font-family: verdana">Welcome</h1>
+   
+   <p>The Algonquin College Student-Teacher Appointment scheduler allows students to book appointments with teachers who have office hours on campus.</p>
+<?php
 $username = '';
 
 if (isset($_POST['submit'])) {
@@ -61,8 +66,6 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
-<div class="container well" align="center">
-   <h1 style="font-family: verdana">Algonquin College Student-Teacher Appointment Scheduler</h1>
    <br>
     <form method="post" action="index.php">
 	<table>
