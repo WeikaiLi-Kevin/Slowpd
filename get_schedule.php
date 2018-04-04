@@ -71,7 +71,7 @@ for ($hour = 8; $hour < 18; $hour++) {
         for ($day = 0; $day < 5; $day++) {
             $status = $week[$daynames[$day]][sprintf("%s%02d%02d", substr($daynames[$day], 0, 3), $hour, $minute)]['status'];
             if ($status == '')
-                $button = '<button type="button" class="btn-sm btn-primary btncheck" onClick="popupModal(this)">Request Appt</button>';
+                $button = '<button type="button" class="btn-sm btn-primary btncheck" onclick="popupModal(this)">Request Appt</button>';
             else if ($status == 'pending')
                 $button = '<strong style="color: green">Pending</strong>';
             else if ($status == 'unavailable')

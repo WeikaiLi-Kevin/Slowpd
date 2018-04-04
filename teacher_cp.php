@@ -45,9 +45,11 @@ else {
         <th>Course</th>
         <th>Notes</th>
         <th>Status</th>
+        <th>Actions</th>
     </tr>\n";
 
     while ($row = $result->fetch_assoc()) {
+        $date = explode(" ", $row['Appt_DateTime']);
         echo "<tr>
         <td>{$row['FirstName']} {$row['LastName']}</td>
         <td>{$row['Appt_DateTime']}</td>
@@ -56,6 +58,13 @@ else {
         <td>{$row['CourseID']}</td>
         <td>{$row['Notes']}</td>
         <td>{$row['Appt_Status']}</td>
+        <td><form id=\"{$row['FirstName']}_{$row['LastName']}_{$row['Id']}_{$date[0]}_{$date[1]}\">";
+        if ($row['Appt_Status'] == 'pending')
+            echo "<input type=\"button\" onclick=\"popupModal(this)\" value=\"Accept\"><input type=\"button\" onclick=\"popupModal(this)\" value=\"Reject\">";
+        else
+            echo "<input type=\"button\" onclick=\"popupModal(this)\" value=\"Cancel\">";
+        
+        echo "</form></td>
     </tr>\n";
     }
 
@@ -63,9 +72,49 @@ else {
 }
 ?>
 </div>
+
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+        <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="modaltitle">Request Appointment</h4>
+                </div>
+                <form action="action_appointment.php" method="post">
+                    <div class="modal-body">
+                        <table>
+                            <tr><td>Student:</td><td id="student"></td></tr>
+                            <tr><td>Date:</td><td id="date"></td></tr>
+                        </table>
+                        <p>Message:</p><textarea rows="10" cols="50" name="notes" value="notes"></textarea>
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="submit" id="submit" class="btn btn-primary">
+                        <input type="hidden" id="appt" name="appt">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 <?php
 include 'footer.php';
 ?>
+<script type="text/javascript">
+function popupModal(e){
+    var vars = $(e).parent().attr('id').split('_'); // creates an array [firstname, lastname, apptId, date, time]
+    var action = $(e).val();
 
+    $('#submit').val(action); // 'Accept'/'Reject'/'Cancel'
+    $('#student').html(vars[0] + ' ' + vars[1]);
+    $('#appt').html(vars[2]);
+    $('#date').html(vars[3] + ' ' + vars[4]);
+    $('#modaltitle').html(action + " Appointment");
+
+    $('#myModal').modal('show');
+}
+</script>
 </body>
 </html>

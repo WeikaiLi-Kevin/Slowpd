@@ -62,9 +62,8 @@ if (file_exists($filename)) {
                     </div>
 
                     <div class="modal-footer">
-                        <!--<button type="button" class="btn btn-primary" onClick="confirmRequest()">Send Appointment Request</button>-->
-                        <input type="submit" class="btn btn-primary" value="submit">
-                        <input type="hidden" id="appt" name="appt" value="<script>selected</script>">
+                        <input type="submit" class="btn btn-primary">
+                        <input type="hidden" id="appt" name="appt" value="">
                         <input type="hidden" id="stud" name="stud" value="<?=$stud?>">
                         <input type="hidden" id="prof" name="prof" value="<?=$prof?>">
                         <input type="hidden" id="profname" name="profname" value="<?=$profName?>">
@@ -77,7 +76,7 @@ if (file_exists($filename)) {
         </div>
     </div>
 
-<script>	
+<script type="text/javascript">	
 // super important variable! monday is what we use to move forward and backwards through the calendar.
 monday = <?=$mon * 1000?>; // * 1000 because JavaScript tracks time in milliseconds since Unix epoch, PHP uses seconds
 getCalendar();
@@ -92,7 +91,7 @@ function getCalendar(){
     xmlhttp.open("GET", 'get_schedule.php?date=' + Math.floor(monday/1000) + '&prof=<?=$prof?>', true); // have to convert from milliseconds back to seconds
     xmlhttp.send();
 }
-    
+
 function popupModal(e){
     var parent_id = $(e).parent().attr('id');
     $('#appt').val(parent_id);
