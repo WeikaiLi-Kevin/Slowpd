@@ -59,7 +59,7 @@ if (file_exists($filename)) {
                             <tr><td>Course:</td><td><input type="text" name="course"></td></tr>
                             <tr><td>Date:</td><td id="date"></td></tr>
                         </table>
-                        <p>Notes:</p><textarea rows="10" cols="50" name="notes" value="notes"></textarea>
+                        <p>Reason:</p><textarea rows="10" cols="50" name="reason" value="reason"></textarea>
                     </div>
 
                     <div class="modal-footer">

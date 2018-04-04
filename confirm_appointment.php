@@ -16,7 +16,7 @@ include 'header.php';
 $myappt = $_POST["appt"];
 $day = $_POST["day"];
 $mycourse = $_POST["course"];
-$mynotes = $_POST["notes"];
+$reason = $_POST["reason"];
 $meetingroom = $_POST["meetingroom"];
 $split1= substr($myappt,0,3);
 $split2= substr($myappt,3,2);
@@ -36,9 +36,9 @@ $datetoinsert.=$appttime;
 
 //DATABASE MySQL
 
-$stmt = $db->prepare("INSERT INTO Appointments (TeacherId, StudentId, Appt_DateTime, Room, Reason, CourseId, Notes, Appt_Status) VALUES (?,?,?,?,'',?,?,'pending');");
+$stmt = $db->prepare("INSERT INTO Appointments (TeacherId, StudentId, Appt_DateTime, Room, Reason, CourseId, Appt_Status) VALUES (?,?,?,?,?,?,'pending');");
 /* bind parameters for markers */
-$stmt->bind_param("ssssss", $_POST['prof'], $_SESSION['userid'], $datetoinsert, $meetingroom, $mycourse, $mynotes);
+$stmt->bind_param("ssssss", $_POST['prof'], $_SESSION['userid'], $datetoinsert, $meetingroom, $reason, $mycourse);
 $stmt->execute();
 $stmt->close();
 ?>
@@ -51,7 +51,7 @@ $stmt->close();
 				<p><strong>Teacher: </strong><?=$_POST['profname']?></p>
 				<p><strong>Student: </strong><?=$_SESSION['realname']?></p>
 				<p><strong>Course: </strong><?=$mycourse?></p>
-				<p><strong>Notes: </strong><?=$mynotes?></p>
+				<p><strong>Reason: </strong><?=$reason?></p>
 				<p><strong>Meeting Room: </strong><?=$meetingroom?></p>
 				<br>
 				<button type="button" class="btn btn-primary" onClick="location.href='student_cp.php';">OK</button>
