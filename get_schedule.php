@@ -50,6 +50,12 @@ if ($result->num_rows > 0) {
 }
 $myJSON = json_encode($week);
 ?>
+            <div align="center" class="col-sm-12">
+                <h1>Schedule for <?=$profName?></h1>
+                <input type="button" class="btn btn-light" value="Previous week"<? if ($mon > time()) {?> onclick="monday -= 604800000; getCalendar();"<?} else {?> disabled<?}?>> 
+                <input type="button" class="btn btn-light" value="Next week" onclick="monday += 604800000; getCalendar();">
+            </div>
+
 				<table class="table table-hover" id="standingstable">
 					<thead>
 						<tr>

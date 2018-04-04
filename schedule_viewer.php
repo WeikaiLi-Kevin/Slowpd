@@ -33,11 +33,6 @@ if (file_exists($filename)) {
 ?>
     <div class="container">
         <div class="standings col-sm-12 well">
-            <div align="center" class="col-sm-12">
-                <h1>Schedule for <?=$profName?></h1>
-                <input type="button" value="Previous week" onclick="monday -= 604800000; getCalendar();"> 
-                <input type="button" value="Next week" onclick="monday += 604800000; getCalendar();">
-            </div>
         <div id="ajax_table">
         </div>
     </div>
