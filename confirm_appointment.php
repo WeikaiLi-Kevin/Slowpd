@@ -36,7 +36,7 @@ $datetoinsert.=$appttime;
 
 //DATABASE MySQL
 
-$stmt = $db->prepare("INSERT INTO Appointments (TeacherId, StudentId, Appt_DateTime, Room, Reason, CourseId, Appt_Status) VALUES (?,?,?,?,?,?,'pending');");
+$stmt = $db->prepare("INSERT INTO Appointments (TeacherId, StudentId, Appt_DateTime, Room, Reason, CourseId, Notes, Appt_Status) VALUES (?,?,?,?,?,?,'','pending');");
 /* bind parameters for markers */
 $stmt->bind_param("ssssss", $_POST['prof'], $_SESSION['userid'], $datetoinsert, $meetingroom, $reason, $mycourse);
 $stmt->execute();

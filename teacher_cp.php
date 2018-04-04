@@ -91,7 +91,7 @@ else {
                     </div>
 
                     <div class="modal-footer">
-                        <input type="submit" id="submit" class="btn btn-primary">
+                        <input type="submit" id="submit" name="submit" class="btn btn-primary">
                         <input type="hidden" id="appt" name="appt">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
@@ -109,7 +109,7 @@ function popupModal(e){
 
     $('#submit').val(action); // 'Accept'/'Reject'/'Cancel'
     $('#student').html(vars[0] + ' ' + vars[1]);
-    $('#appt').html(vars[2]);
+    $('#appt').val(vars[2]);
     $('#date').html(vars[3] + ' ' + vars[4]);
     $('#modaltitle').html(action + " Appointment");
 
