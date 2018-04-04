@@ -11,7 +11,34 @@ $lname = '';
 $email = '';
 $emaildomain = '';
 
-if (isset($_POST['submit'])) {
+if (isset($_GET['conf'])) {
+    $query = "UPDATE Users SET ConfirmationHash = '' WHERE ConfirmationHash = ?;";
+    $stmt = $db->prepare($query);
+    $stmt->bind_param("s", $_GET['conf']);
+    $stmt->execute();
+    
+    if ($stmt->affected_rows == 0) {
+        echo "<h1>Already registered</h1>
+        
+        <p>It looks like you're already registered. You can delete your confirmation email.</p>";
+    }
+    else {
+        include 'header.php';
+        echo "<h1>Registration successful</h1>
+        
+<p>Thank you for confirming your registration. You can delete your confirmation email.</p>\n";
+    }
+    $stmt->close();
+    echo '<p><a href="index.php">Log in</a></p>';
+    
+    include 'footer.php';
+
+    echo '</body>
+</html>';
+
+    exit(); # close page so user doesn't see registration form
+}
+else if (isset($_POST['submit'])) {
     # using these variables to re-populate fields so that user doesn't have to re-enter every field if the form doesn't validate
     if (isset($_POST['fname'])) $fname = $_POST['fname'];
     if (isset($_POST['lname'])) $lname = $_POST['lname'];
@@ -44,17 +71,37 @@ if (isset($_POST['submit'])) {
                 $result = $stmt->get_result();
                 $stmt->close();
                 
+                # *** Change $WEB_HOST in db_vars.php to point to wherever this website is hosted from!!! ***
+                $confUrl = "$WEB_HOST/register.php?conf=$confirmationHash";
+                
+                #send email
+                $to = $fullemail;
+                $subject = "Confirmation email for Algonquin Student-Teacher Appointment Scheduler";
+                $message = '<html>';
+                $message .= '<body>';
+                $message .= '<p>Thank you for registering an account with the Algonquin Student-Teacher Appointment Scheduler</p>';
+                $message .= "<p><a href=\"$confUrl\">Click here to confirm registration</a></p>";
+                $message .= "<p>If the link above doesn't work, copy this address into your browser: $confUrl</p>";
+                # change this to whatever message you want to send from Algonquin College
+                $message .= "<p>Thank you, Team Slowpd.</p>";
+                $message .= '</body>';
+                $message .= '</html>';
+                $headers = "MIME-Version: 1.0\r\n";
+                $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
+                $headers .= "From: patt0108@algonquinlive.com";  # <-- change to administrative email address
+                
+                mail($to,$subject,$message,$headers);
+                
                 # print successful registration page, and then end script processing
-?>
-<h1>Registration complete</h1>
+                echo '<h1>Registration complete</h1>
 
-<p>You have successfully registered. Go to <a href="index.php">login page</a>.</p>
-<?php
+<p>You have successfully registered. Go to <a href="index.php">login page</a>.</p>';
+
                 include 'footer.php';
-?>
-    </body>
-</html>
-<?php
+
+                echo '</body>
+</html>';
+
                 exit(); # close page so user doesn't see registration form
             }
             else {
@@ -74,24 +121,19 @@ if (isset($_POST['submit'])) {
 <div class="container well" align="center">
    <h1>Student-Teacher Appointment Scheduler Registration</h1>
 
-   <form  method="post" action="register.php">
-
-       
-	   
-	   
-	   
+   <form method="post" action="register.php">
 	   	<table>
-			<tr><td style="font-weight: bold ;">First name: </td><td><input class="form-control" name="fname" value="<?=$fname?>" required></td></tr>
-			<tr><td style="font-weight: bold ;">Last name: </td><td><input class="form-control" name="lname" value="<?=$lname?>" required></td></tr>
-			<tr><td style="font-weight: bold ;">Email address: </td><td><input class="form-control" name="email" maxlength="8"  value="<?=$email?>" required>@
+			<tr><td style="font-weight: bold;">First name: </td><td><input class="form-control" name="fname" value="<?=$fname?>" required></td></tr>
+			<tr><td style="font-weight: bold;">Last name: </td><td><input class="form-control" name="lname" value="<?=$lname?>" required></td></tr>
+			<tr><td style="font-weight: bold;">Email address: </td><td><input class="form-control" name="email" maxlength="8"  value="<?=$email?>" required>@
        <select name="emaildomain" required>
 		   <option value="">-- Select email domain --</option>
            <option value="algonquinlive.com"<? if ($emaildomain == 'algonquinlive.com') echo " selected"; ?>>algonquinlive.com (student)</option>
            <option value="algonquincollege.com"<? if ($emaildomain == 'algonquincollege.com') echo " selected"; ?>>algonquincollege.com (teacher)</option>
        </select></td></tr>
 	   
-			<tr><td style="font-weight: bold ;">Password: </td><td><input class="form-control" type="password" name="password1" required></td></tr>
-			<tr><td style="font-weight: bold ;">Re-type password: </td><td><input class="form-control" type="password" name="password2" required></td></tr>
+			<tr><td style="font-weight: bold;">Password: </td><td><input class="form-control" type="password" name="password1" required></td></tr>
+			<tr><td style="font-weight: bold;">Re-type password: </td><td><input class="form-control" type="password" name="password2" required></td></tr>
 		 </table> 
 		 <br>
 		 <input class="btn btn-success" type="submit" name="submit"> <input class="btn btn-success" type="reset">

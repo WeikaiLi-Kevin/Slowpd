@@ -32,7 +32,7 @@ if ($result->num_rows == 1) {
     <form method="post" action="confirm_user.php">
         <input type="submit" name="submit" value="Confirm user">
         <input type="hidden" name="userid" value="<?=$row['Id']?>">
-         <input type="hidden" name="userid" value="<?=$row['Email']?>">
+         <input type="hidden" name="email" value="<?=$row['Email']?>">
     </form>
 <?php
     }
@@ -50,6 +50,7 @@ if ($result->num_rows == 1) {
            <option value="teacher"<? if ($row['UserType'] == 'teacher') echo " selected"; ?>>teacher</option>
            <option value="admin"<? if ($row['UserType'] == 'admin') echo " selected"; ?>>admin</option>
        </select><br>
+       <input type="hidden" name="userid" value="<?=$row['Id']?>">
        <input type="submit" name="submit"> <input type="reset">
    </form>
    

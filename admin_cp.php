@@ -58,12 +58,11 @@ if (isset($_POST['submit'])) {
 
             while ($row = $result->fetch_assoc()) {
                 $status = $row['ConfirmationHash'] == '' ? 'Registered' : 'Pending';
-                $userName = "{$row['FirstName']} {$row['LastName']}"; # for form submission to modify or delete user page
                 
                 echo <<< END
             <tr>
                 <td>{$row['Id']}</td>
-                <td>$userName</td>
+                <td>{$row['FirstName']} {$row['LastName']}</td>
                 <td>{$row['Email']}</td>
                 <td>{$row['UserType']}</td>
                 <td>$status</td>
@@ -71,7 +70,6 @@ if (isset($_POST['submit'])) {
                     <form method="post" action="modify_user.php">
                         <input type="submit" name="submit" value="Modify">
                         <input type="hidden" name="userid" value="{$row['Id']}">
-                        <input type="hidden" name="username" value="$userName">
                         <input type="hidden" name="email" value="{$row['Email']}">
                     </form>
                 </td>

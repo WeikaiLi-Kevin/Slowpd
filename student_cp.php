@@ -46,7 +46,11 @@ else {
         <td>{$row['CourseID']}</td>
         <td>{$row['Notes']}</td>
         <td>{$row['Appt_Status']}</td>
-        <td><input class=\"btn btn-light\" type=\"button\" value=\"Cancel\"></td>
+        <td><form method=\"post\" action=\"cancel_appointment.php\">
+            <input class=\"btn btn-light\" type=\"submit\" name=\"submit\" value=\"Cancel\">
+            <input type=\"hidden\" name=\"appointment\" value=\"{$row['Id']}\">
+            </form>
+        </td>
     </tr>\n";
     }
 
@@ -57,7 +61,7 @@ $fname = '';
 $lname = '';
 $email = '';
 ?>
-    <h3 style="font-weight: bold ;color: #026342">Book appointments</h3>
+    <h2 style="font-weight: bold ;color: #026342">Book appointments</h2>
 <?php
 if (isset($_POST['submit'])) {
     # using these variables to re-populate fields so that user doesn't have to re-enter every field if they get no search results

@@ -41,10 +41,16 @@ if (isset($_POST['submit'])) {
         
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
-            $_SESSION['usertype'] = $row['UserType'];
-            $_SESSION['userid'] = $row['Id'];
-            $_SESSION['realname'] = "${row['FirstName']} {$row['LastName']}";
-            redirect();
+
+            if ($row['ConfirmationHash'] == '') {
+                $_SESSION['usertype'] = $row['UserType'];
+                $_SESSION['userid'] = $row['Id'];
+                $_SESSION['realname'] = "${row['FirstName']} {$row['LastName']}";
+                redirect();                
+            }
+            else {
+                echo '<p class="red">You have not confirmed your registration. Please check your email for your confirmation code.</p>';
+            }
         }
         else {
             echo '<p class="red">Invalid id or password.</p>';
