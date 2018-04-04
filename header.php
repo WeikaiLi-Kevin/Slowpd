@@ -19,8 +19,6 @@ $db->set_charset("utf8");
 if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
-
-if (isset($_SESSION['userid'])) {
 ?>
 	<nav class="navbar navbar-inverse navbar-fixed-top navbar-default" role="navigation">
 		<div class="container">
@@ -28,6 +26,9 @@ if (isset($_SESSION['userid'])) {
 			<div class="navbar-header">
 				<a href="#" class="navbar-left"><img class="img-rounded" src="./img/gonq.png"></a>
 			</div><!-- Collect the nav links, forms, and other content for toggling -->
+<?php
+if (isset($_SESSION['userid'])) {
+?>
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li>
@@ -43,8 +44,19 @@ if (isset($_SESSION['userid'])) {
 					</li>
 				</ul>
 			</div>
-		</div>
-	</nav>
 <?php
 }
+else {
 ?>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li>
+						<a class="nav-link">Algonquin College Student-Teacher Appointment Scheduler</a>
+					</li>
+				</ul>
+			</div>
+<?php    
+}
+?>            
+		</div>
+	</nav>
