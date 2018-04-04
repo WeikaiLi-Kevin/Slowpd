@@ -56,7 +56,7 @@ else {
         echo "<p>You have successfully $apptStatus your appointment with {$row['studentname']}.";
 
         #send email
-        $to = $row['email'];
+        $to = $row['Email'];
         $subject = "Algonquin appointment has been $apptStatus";
         $messageTxt .= '<p>Thank you for requesting an appointment through the Algonquin Student-Teacher Appointment Scheduler.</p>';
         $messageTxt .= "<p>Your request for an appointment with {$row['teachername']} at {$row['Appt_DateTime']} has been $apptStatus with the following message:</p>";
