@@ -21,17 +21,16 @@ $stud = $_SESSION['userid'];
 $filename = "prefs\\$prof\\template.json";
 $filename2 = "prefs\\$prof\\config.json";
 
-	$configcontents = file_get_contents($filename2);
-	$config = json_decode($configcontents, true);
-	$meetingroom = $config['meetingroom'];
-
+$configcontents = file_get_contents($filename2);
+$config = json_decode($configcontents, true);
+$meetingroom = $config['meetingroom'];
 
 if (file_exists($filename)) {
     //determines week to show by default
     if(date("l")=="Saturday" || date("l")=="Sunday")
-        $mon = strtotime("monday this week");
-    else
         $mon = strtotime("next monday");
+    else
+        $mon = strtotime("monday this week");
 ?>
     <div class="container">
         <div class="standings col-sm-12 well">
