@@ -19,6 +19,12 @@ $prof = $_POST['teacher'];
 $profName = $_POST['teachername'];
 $stud = $_SESSION['userid'];
 $filename = "prefs\\$prof\\template.json";
+$filename2 = "prefs\\$prof\\config.json";
+
+	$configcontents = file_get_contents($filename2);
+	$config = json_decode($configcontents, true);
+	$meetingroom = $config['meetingroom'];
+
 
 if (file_exists($filename)) {
     //determines week to show by default
@@ -65,6 +71,7 @@ if (file_exists($filename)) {
                         <input type="hidden" id="prof" name="prof" value="<?=$prof?>">
                         <input type="hidden" id="profname" name="profname" value="<?=$profName?>">
                         <input type="hidden" id="day" name="day" value="">
+						<input type="hidden" id="meetingroom" name="meetingroom" value="<?=$meetingroom?>">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </form>

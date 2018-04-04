@@ -13,6 +13,7 @@ if ($_POST == [])   # page wasn't reached by POST from modify_user.php
 <?php
 include 'header.php';
 ?>
+<div class="container well" align="center">
     <h1>Delete user</h1>
 <?php
 $query = "DELETE FROM Users WHERE Id = ? AND Email = ?;";
@@ -26,6 +27,7 @@ else
     echo "Delete of user {$_POST['userid']} failed.</p>\n";
 ?>    
     <p><a href="admin_cp.php">Return to Admin Control Panel</a></p>
+</div>
 <?php
 $stmt->close();
 
