@@ -2,7 +2,8 @@
 include 'session_include.php';
 session_check('teacher');
 
-if ($_POST == [])   # page wasn't reached by POST from teacher_cp.php
+# page wasn't reached by POST from teacher_cp.php
+if (!isset($_POST['submit']) || ($_POST['submit'] != 'Accept' && $_POST['submit'] != 'Reject' && $_POST['submit'] != 'Cancel'))
     header('Location:teacher_cp.php');
 ?>
 <!DOCTYPE html>
@@ -17,34 +18,73 @@ include 'header.php';
     <h1><?=$_POST['submit']?> Appointment</h1>
 
 <?php
-if ($_POST['submit'] == 'Accept') {
-    $query = "UPDATE Appointments SET Notes = ?, Appt_Status = 'accepted' WHERE Id = ?";
-    $stmt = $db->prepare($query);
-    $stmt->bind_param("si", $_POST['notes'], $_POST['appt']);
-    $stmt->execute();
-    $affected = $stmt->affected_rows;
-    $stmt->close();
-}
-else if ($_POST['submit'] == 'Reject' || $_POST['submit'] == 'Cancel') {
-    $query = "DELETE FROM Appointments WHERE Id = ?";
-    $stmt = $db->prepare($query);
-    $stmt->bind_param("s", $_POST['appt']);
-    $stmt->execute();
-    $affected = $stmt->affected_rows;
-    $stmt->close();
-}
+#check that appointment exists and get details about participants
+$query = "SELECT a.*,
+    b.Email,
+    (SELECT CONCAT(FirstName, ' ', LastName) FROM Users WHERE Id = a.TeacherId) teachername,
+    (SELECT CONCAT(FirstName, ' ', LastName) FROM Users WHERE Id = a.StudentId) studentname
+    FROM slowpd.Appointments a
+    JOIN Users b ON (a.StudentId=b.Id)
+    WHERE a.Id = ?;";
+$stmt = $db->prepare($query);
+$stmt->bind_param("s", $_POST['appt']);
+$stmt->execute();
+$result = $stmt->get_result();
+$stmt->close();
 
-if ($affected == 0)
-    echo "<p>{$_POST['submit']} appointment failed.";
-else
-    echo "<p>{$_POST['submit']} appointment succeeded.";
-        
-echo "<p>The following message was sent to the student:</p>
+if ($result->num_rows == 0)
+    echo '<p>Appointment has already been cancelled.</p>';
+else {
+    if ($_POST['submit'] == 'Accept') {
+        $query = "UPDATE Appointments SET Notes = ?, Appt_Status = 'accepted' WHERE Id = ?";
+        $stmt = $db->prepare($query);
+        $stmt->bind_param("si", $_POST['notes'], $_POST['appt']);
+    }
+    else {
+        $query = "DELETE FROM Appointments WHERE Id = ?";
+        $stmt = $db->prepare($query);
+        $stmt->bind_param("s", $_POST['appt']);
+    }
+    $stmt->execute();
 
-<p>\"{$_POST['notes']}\"</p>";
+    if ($stmt->affected_rows == 0)
+        echo "<p>{$_POST['submit']} appointment failed.";
+    else {
+        $apptStatus = strtolower($_POST['submit']) . 'ed';
+        $row = $result->fetch_assoc(); # result of earlier query about the appointment
+
+        echo "<p>You have successfully $apptStatus your appointment with {$row['studentname']}.";
+
+        #send email
+        $to = $row['email'];
+        $subject = "Algonquin appointment has been $apptStatus";
+        $messageTxt .= '<p>Thank you for requesting an appointment through the Algonquin Student-Teacher Appointment Scheduler.</p>';
+        $messageTxt .= "<p>Your request for an appointment with {$row['teachername']} at {$row['Appt_DateTime']} has been $apptStatus with the following message:</p>";
+        $messageTxt .= "<blockquote>{$_POST['notes']}</blockquote>";
+        $message = '<html>';
+        $message .= '<body>' . $messageTxt;
+
+        # change this to whatever message you want to send from Algonquin College
+        $message .= "<p>Thank you, Team Slowpd.</p>";
+        $message .= '</body>';
+        $message .= '</html>';
+        $headers = "MIME-Version: 1.0\r\n";
+        $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
+        $headers .= "From: patt0108@algonquinlive.com";  # <-- change to administrative email address
+
+        mail($to,$subject,$message,$headers);
+
+        echo "<p>The following message was sent to the student:</p>
+
+<div class=\"panel panel-default\">
+  <div class=\"panel-body\">$messageTxt</div>
+</div>";
+    }
+    $stmt->close();
 ?>
 </div>
 <?php
+}
 include 'footer.php';
 ?>    
 </body>
