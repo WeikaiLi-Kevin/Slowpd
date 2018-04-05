@@ -32,7 +32,6 @@ $db->close();
 
 if ($result->num_rows > 0) {
     // output data of each row
-        var_dump($days);
     while($row = $result->fetch_assoc()) {
         //Piece together string for JSON
         $dbdate = $row['Appt_DateTime'];
@@ -44,7 +43,7 @@ if ($result->num_rows > 0) {
                 $week[$dayname][$string]['status'] = 'pending';
             }
             else {  // "accepted"
-                $week[$dayname][$string]['status'] = 'booked';
+                $week[$dayname][$string]['status'] = 'unavailable';
             }
         }
     }
@@ -85,8 +84,6 @@ for ($hour = 8; $hour < 18; $hour++) {
                 $button = '<button type="button" class="btn-sm btn-primary btncheck" onclick="popupModal(this)">Request Appt</button>';
             else if ($status == 'pending')
                 $button = '<strong style="color: green">Pending</strong>';
-            else if ($status == 'booked')
-                $button = '<strong class="text-warning">Booked</strong>';
             else if ($status == 'unavailable')
                 $button = '<strong class="text-danger">Unavailable</strong>';
             else
