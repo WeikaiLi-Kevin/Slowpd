@@ -21,7 +21,7 @@ if (!file_exists($filename)) {
     echo '<p class="text-danger">You have not created a schedule for this semester. Students will not be able to request appointments with you until you create an availability schedule.</p>';
 }
 ?>
-    <p><a href="schedule_editor.php">Edit your schedule</a></p>
+    <p><a href="schedule_editor.php"><input type="button" class="btn btn-primary btncheck" value="Edit your schedule"></a></p>
 
     <h2 style="font-weight: bold; color: #026342;">Upcoming appointments</h2>
 <?php
