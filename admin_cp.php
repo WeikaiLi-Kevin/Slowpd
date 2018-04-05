@@ -94,11 +94,11 @@ END;
        
         
         <table>
-        <tr><td style="font-weight: bold ;">First name: </td><td><input class="form-control" name="fname" value="<?=$fname?>"></td></tr>
-        <tr><td style="font-weight: bold ;">Last name: </td><td><input class="form-control" name="lname" value="<?=$lname?>"></td></tr>
-        <tr><td style="font-weight: bold ;">Email address: </td><td><input class="form-control" name="email" type="email" value="<?=$email?>"></td></tr>
-     </table>     
-        <input class="btn btn-success" name="submit" type="submit"> <input class="btn btn-success" type="reset">
+            <tr><td style="font-weight: bold ;">First name: </td><td><input class="form-control" name="fname" value="<?=$fname?>"></td></tr>
+            <tr><td style="font-weight: bold ;">Last name: </td><td><input class="form-control" name="lname" value="<?=$lname?>"></td></tr>
+            <tr><td style="font-weight: bold ;">Email address: </td><td><input class="form-control" name="email" type="email" value="<?=$email?>"></td></tr>
+            <tr><td></td><td><input class="btn btn-success" name="submit" type="submit"> &nbsp; <input class="btn btn-success" type="reset"></td></tr>
+         </table>     
     </form>
     
     <h2 style="font-weight: bold ;color:#026342"> Create users</h2>
