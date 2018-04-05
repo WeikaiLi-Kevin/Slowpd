@@ -27,6 +27,7 @@ $daynames = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
 ?>
 <div class="container well" align="center">
     <h1>Schedule Editor</h1>
+    <p>This schedule represents your usual availability for the entire semester. Don't use it to change your availability for the current week; every week will be updated!</p>
 
         <div class="standings col-sm-12 well">
             <form onsubmit="event.preventDefault(); saveSchedule(); return false;">
@@ -64,7 +65,7 @@ for ($hour = 8; $hour < 18; $hour++) {
 ?>
                         <tr>
                             <td colspan="2"></td>
-                            <th>Meeting room:</th>
+                            <td class="pull-right"><strong>Meeting room:</strong></td>
                             <td><input id="meetingroom" value="<?=$config['meetingroom']?>" size="8" required></td>
                             <td colspan="2"></td>
                         </tr>
