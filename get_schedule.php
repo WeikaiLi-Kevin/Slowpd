@@ -50,9 +50,10 @@ if ($result->num_rows > 0) {
 }
 $myJSON = json_encode($week);
 ?>
+        <div class="standings col-sm-12 well">
             <div align="center" class="col-sm-12">
                 <h1>Schedule for <?=$_GET['profname']?></h1>
-                <input type="button" class="btn btn-light" value="Previous week"<? if ($mon > time()) {?> onclick="monday -= 604800000; getCalendar();"<?} else {?> disabled<?}?>> 
+                <input type="button" class="btn btn-light" value="Previous week"<?php if ($mon > time()) { echo 'onclick="monday -= 604800000; getCalendar();"'; } else { echo 'disabled'; }?>> 
                 <input type="button" class="btn btn-light" value="Next week" onclick="monday += 604800000; getCalendar();">
             </div>
 
@@ -72,7 +73,7 @@ $myJSON = json_encode($week);
 for ($hour = 8; $hour < 18; $hour++) {
     for ($minute = 0; $minute < 31; $minute += 30) {
         printf("<tr>
-                <td><strong>%02d:%02d</strong></td>", $hour, $minute);
+                <td><strong>%02d:%02d</strong></td>\n", $hour, $minute);
         
         for ($day = 0; $day < 5; $day++) {
             $status = $week[$daynames[$day]][sprintf("%s%02d%02d", substr($daynames[$day], 0, 3), $hour, $minute)]['status'];
@@ -88,7 +89,7 @@ for ($hour = 8; $hour < 18; $hour++) {
             else
                 $button = '<strong style="color: black">Unknown</strong>';
                                                            
-            printf("<td id=\"%s%02d%02d\">%s</td>", substr($daynames[$day], 0, 3), $hour, $minute, $button);    
+            printf("<td id=\"%s%02d%02d\">%s</td>\n", substr($daynames[$day], 0, 3), $hour, $minute, $button);    
         }
         
         echo "</tr>\n";
@@ -97,3 +98,4 @@ for ($hour = 8; $hour < 18; $hour++) {
 ?>
 					</tbody>
 				</table>
+            </div>
