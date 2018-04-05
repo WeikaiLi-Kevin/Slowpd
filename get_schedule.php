@@ -3,7 +3,6 @@ if ($_POST == [])   # page wasn't reached by AJAX POST from schedule_viewer.php
     header('Location:student_cp.php');
 
 include 'db_vars.php';
-
 $db = new mysqli($DB_HOST, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
 $db->set_charset("utf8");
 
@@ -19,9 +18,7 @@ $days = [date("mdY",$mon), date("mdY",$tue), date("mdY",$wed), date("mdY",$thu),
 $daynames = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
 
 $filename = "prefs\\{$_POST['prof']}\\template.json";
-$temp1 = file_get_contents($filename);
-
-$week = json_decode($temp1, true);
+$week = json_decode(file_get_contents($filename), true);
 
 //Grabbing user prefs
 $query = "SELECT Appt_Status, Appt_DateTime FROM Appointments WHERE TeacherId = ?";
@@ -32,18 +29,22 @@ $result = $stmt->get_result();
 $stmt->close();
 $db->close();
 
+
 if ($result->num_rows > 0) {
     // output data of each row
+        var_dump($days);
     while($row = $result->fetch_assoc()) {
         //Piece together string for JSON
         $dbdate = $row['Appt_DateTime'];
-
         $dayname = strtolower(date("l", strtotime($dbdate)));
-        $string=strtolower(date("DGi", strtotime($dbdate)));
+        $string=strtolower(date("DHi", strtotime($dbdate)));
         //Configure JSON
-        if ($row['Appt_Status'] == "pending"){
-            if(in_array(date("mdY",strtotime($dbdate)),$days)){
+        if(in_array(date("mdY",strtotime($dbdate)),$days)){
+            if ($row['Appt_Status'] == "pending"){
                 $week[$dayname][$string]['status'] = 'pending';
+            }
+            else {  // "accepted"
+                $week[$dayname][$string]['status'] = 'booked';
             }
         }
     }
@@ -84,8 +85,10 @@ for ($hour = 8; $hour < 18; $hour++) {
                 $button = '<button type="button" class="btn-sm btn-primary btncheck" onclick="popupModal(this)">Request Appt</button>';
             else if ($status == 'pending')
                 $button = '<strong style="color: green">Pending</strong>';
+            else if ($status == 'booked')
+                $button = '<strong class="text-warning">Booked</strong>';
             else if ($status == 'unavailable')
-                $button = '<strong style="color: maroon">Unavailable</strong>';
+                $button = '<strong class="text-danger">Unavailable</strong>';
             else
                 $button = '<strong style="color: black">Unknown</strong>';
                                                            
