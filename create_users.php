@@ -38,12 +38,15 @@ if (isset($_POST['submit'])) {
             $stmt->close();
             
             if ($result->num_rows == 0) {
+                # encrypt the password for security
+                $password = password_hash($_POST['password1'], PASSWORD_DEFAULT);
+                
                 # creates 23 character hash. Second parameter is $more_entropy which must be true under CYGWIN.
                 $confirmationHash = uniqid("", TRUE);
                 
                 $query = 'INSERT INTO Users VALUES (?, ?, ?, ?, ?, ?, ?);';
                 $stmt = $db->prepare($query);
-                $stmt->bind_param("sssssss", $userid, $fname, $lname, $email, $_POST['password1'], $usertype, $confirmationHash);
+                $stmt->bind_param("sssssss", $userid, $fname, $lname, $email, $password, $usertype, $confirmationHash);
                 $stmt->execute();
                 
                 if ($stmt->affected_rows == 1) {

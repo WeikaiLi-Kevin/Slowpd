@@ -102,7 +102,7 @@ END;
     </form>
     
     <h2 style="font-weight: bold ;color:#026342"> Create users</h2>
-    <p><a style="font-weight: bold ;color:#026342" href="create_users.php">Create users</a></p>
+    <p><a href="create_users.php"><input type="button" class="btn btn-primary btncheck" value="Create users"></a></p>
 </div>
 <?php
 include 'footer.php';

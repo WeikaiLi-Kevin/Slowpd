@@ -59,6 +59,9 @@ else if (isset($_POST['submit'])) {
             $stmt->close();
             
             if ($result->num_rows == 0) {
+                # encrypt the password for security
+                $password = password_hash($_POST['password1'], PASSWORD_DEFAULT);
+                
                 # must create $email variable so we don't get "Cannot pass parameter 5 by reference" during bind_param
                 $fullemail = "$email@$emaildomain";
                 # algonquinlive.com = student, algonquincollege.com = teacher
@@ -68,7 +71,7 @@ else if (isset($_POST['submit'])) {
 
                 $query = 'INSERT INTO Users VALUES (?, ?, ?, ?, ?, ?, ?)';
                 $stmt = $db->prepare($query);
-                $stmt->bind_param("sssssss", $email, $fname, $lname, $fullemail, $_POST['password1'], $usertype, $confirmationHash);
+                $stmt->bind_param("sssssss", $email, $fname, $lname, $fullemail, $password, $usertype, $confirmationHash);
                 $stmt->execute();
                 $result = $stmt->get_result();
                 $stmt->close();

@@ -12,7 +12,7 @@ function redirect(){
         }
         else if ($_SESSION['usertype'] == 'student') {
             header('Location:student_cp.php');
-        }        
+        }   
     }
 }
 
@@ -37,9 +37,9 @@ if (isset($_POST['submit'])) {
     if (isset($_POST['username'])) $username = $_POST['username'];
     
     if ($username && isset($_POST['password'])) {
-        $query = 'SELECT * FROM Users WHERE id = ? AND password = ?';
+        $query = 'SELECT * FROM Users WHERE id = ?';
         $stmt = $db->prepare($query);
-        $stmt->bind_param("ss", $username, $_POST['password']);
+        $stmt->bind_param("s", $username);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
@@ -47,14 +47,19 @@ if (isset($_POST['submit'])) {
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
 
-            if ($row['ConfirmationHash'] == '') {
-                $_SESSION['usertype'] = $row['UserType'];
-                $_SESSION['userid'] = $row['Id'];
-                $_SESSION['realname'] = "${row['FirstName']} {$row['LastName']}";
-                redirect();                
+            if (password_verify($_POST['password'], $row['Password'])) {
+                if ($row['ConfirmationHash'] == '') {
+                    $_SESSION['usertype'] = $row['UserType'];
+                    $_SESSION['userid'] = $row['Id'];
+                    $_SESSION['realname'] = "${row['FirstName']} {$row['LastName']}";
+                    redirect();                
+                }                
+                else {
+                    echo '<p class="red">You have not confirmed your registration. Please check your email for your confirmation code.</p>';
+                }
             }
             else {
-                echo '<p class="red">You have not confirmed your registration. Please check your email for your confirmation code.</p>';
+                echo '<p class="red">Invalid id or password.</p>';
             }
         }
         else {
