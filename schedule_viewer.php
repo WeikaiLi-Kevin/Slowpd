@@ -32,7 +32,6 @@ if (file_exists($filename)) {
         $mon = strtotime("monday this week");
 ?>
     <div class="container">
-        <div class="standings col-sm-12 well">
         <div id="ajax_table">
         </div>
     </div>
@@ -83,8 +82,10 @@ function getCalendar(){
         if (xmlhttp.readyState==4 && xmlhttp.status==200)
             document.getElementById('ajax_table').innerHTML = xmlhttp.responseText;
     }
-    xmlhttp.open("GET", 'get_schedule.php?date=' + Math.floor(monday/1000) + '&prof=<?=$prof?>&profname=<?=$profName?>', true); // have to convert from milliseconds back to seconds
-    xmlhttp.send();
+
+    xmlhttp.open("POST", "get_schedule.php", true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send('date=' + Math.floor(monday/1000) + '&prof=<?=$prof?>&profname=<?=$profName?>'); 
 }
 
 function popupModal(e){

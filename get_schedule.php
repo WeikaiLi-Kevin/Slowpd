@@ -1,5 +1,5 @@
 <?php
-if ($_GET == [])   # page wasn't reached by AJAX GET from schedule_viewer.php
+if ($_POST == [])   # page wasn't reached by AJAX POST from schedule_viewer.php
     header('Location:student_cp.php');
 
 include 'db_vars.php';
@@ -9,7 +9,7 @@ $db->set_charset("utf8");
 
 
 # calling page provides Monday for week to check
-$mon = $_GET['date'];   # date in seconds from Unix epoch
+$mon = $_POST['date'];   # date in seconds from Unix epoch
 $tue = $mon + 86400;    # 86400 seconds per day
 $wed = $tue + 86400;
 $thu = $wed + 86400;
@@ -18,7 +18,7 @@ $fri = $thu + 86400;
 $days = [date("mdY",$mon), date("mdY",$tue), date("mdY",$wed), date("mdY",$thu), date("mdY",$fri)];
 $daynames = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
 
-$filename = "prefs\\{$_GET['prof']}\\template.json";
+$filename = "prefs\\{$_POST['prof']}\\template.json";
 $temp1 = file_get_contents($filename);
 
 $week = json_decode($temp1, true);
@@ -26,7 +26,7 @@ $week = json_decode($temp1, true);
 //Grabbing user prefs
 $query = "SELECT Appt_Status, Appt_DateTime FROM Appointments WHERE TeacherId = ?";
 $stmt = $db->prepare($query);
-$stmt->bind_param("s", $_GET['prof']);
+$stmt->bind_param("s", $_POST['prof']);
 $stmt->execute();
 $result = $stmt->get_result();
 $stmt->close();
@@ -52,7 +52,7 @@ $myJSON = json_encode($week);
 ?>
         <div class="standings col-sm-12 well">
             <div align="center" class="col-sm-12">
-                <h1>Schedule for <?=$_GET['profname']?></h1>
+                <h1>Schedule for <?=$_POST['profname']?></h1>
                 <input type="button" class="btn btn-light" value="Previous week"<?php if ($mon > time()) { echo 'onclick="monday -= 604800000; getCalendar();"'; } else { echo 'disabled'; }?>> 
                 <input type="button" class="btn btn-light" value="Next week" onclick="monday += 604800000; getCalendar();">
             </div>

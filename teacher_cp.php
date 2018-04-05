@@ -12,19 +12,18 @@ include 'header.php';
 ?>
 <div class="container well" align="center">
     <h1>Welcome, <?=$_SESSION['realname']?></h1>
+
+    <h2 style="font-weight: bold; color: #026342;">Schedule editor</h2>
 <?php
     
 $filename = "prefs\\{$_SESSION['userid']}\\template.json";
-
 if (!file_exists($filename)) {
-?>
-    <h2>Create schedule</h2>
-    
-    <p>You have not created a schedule for this semester. Students will not be able to request appointments with you until you create an availability schedule.</p>
-<?php
+    echo '<p class="text-danger">You have not created a schedule for this semester. Students will not be able to request appointments with you until you create an availability schedule.</p>';
 }
 ?>
-    <h2 style="font-weight: bold ;color:#026342">Upcoming appointments</h2>
+    <p><a href="schedule_editor.php">Edit your schedule</a></p>
+
+    <h2 style="font-weight: bold; color: #026342;">Upcoming appointments</h2>
 <?php
 $query = 'SELECT a.*, b.FirstName, b.LastName FROM Appointments a JOIN Users b ON (a.StudentId = b.Id) WHERE a.TeacherID = ? AND Appt_DateTime >= CURDATE() ORDER BY Appt_DateTime;';
 $stmt = $db->prepare($query);
