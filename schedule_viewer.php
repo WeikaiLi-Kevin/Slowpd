@@ -109,7 +109,7 @@ function getCalendar(){
 function popupModal(e){
     var parent_id = $(e).parent().attr('id');
     $('#appt').val(parent_id);
-    $('#modaltitle').html("Request Appointment: " + parent_id);
+    $('#modaltitle').html("Request Appointment");
     var abbr=parent_id.substring(0,3);
 
     days = ['mon', 'tue', 'wed', 'thu', 'fri'];
