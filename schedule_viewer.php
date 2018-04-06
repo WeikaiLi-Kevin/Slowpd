@@ -13,27 +13,45 @@ session_check('student');
 </style>
 <?php
 include 'header.php';
-
+?>
+    <div class="container well" id="container">
+<?php
 $prof = $_POST['teacher'];
 $profName = $_POST['teachername'];
 $stud = $_SESSION['userid'];
 $filename = "prefs\\$prof\\template.json";
 $filename2 = "prefs\\$prof\\config.json";
 
-$configcontents = file_get_contents($filename2);
-$config = json_decode($configcontents, true);
-$meetingroom = $config['meetingroom'];
+if (file_exists($filename) && file_exists($filename2)) {
+    $configcontents = file_get_contents($filename2);
+    $config = json_decode($configcontents, true);
+    $meetingroom = $config['meetingroom'];
 
-if (file_exists($filename)) {
-    //determines week to show by default
-    if(date("l")=="Saturday" || date("l")=="Sunday")
-        $mon = strtotime("next monday");
-    else
-        $mon = strtotime("monday this week");
+    # check if student already has an appointment with this teacher
+    # prevents a student from booking all of a teacher's slots
+    $query = "SELECT COUNT(*) count FROM Appointments WHERE StudentId = ? AND TeacherId = ?";
+    $stmt = $db->prepare($query);
+    $stmt->bind_param("ss", $_SESSION['userid'], $_POST['teacher']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
+
+    $row = $result->fetch_assoc();
+    if ($row['count'] > 0) {
+        echo "<h1>Already booked</h1>
+    
+    <p>You already have a pending or accepted appointment with this teacher. Please attend this meeting to determine if you need another one. If you need to reschedule, delete your current appointment and request another.</p>
+    
+</div>";
+    }
+    else {
+        var_dump($row);
+        //determines week to show by default
+        if(date("l")=="Saturday" || date("l")=="Sunday")
+            $mon = strtotime("next monday");
+        else
+            $mon = strtotime("monday this week");
 ?>
-    <div class="container">
-        <div id="ajax_table">
-        </div>
     </div>
     
     <div id="myModal" class="modal fade" role="dialog">
@@ -80,7 +98,7 @@ function getCalendar(){
 
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4 && xmlhttp.status==200)
-            document.getElementById('ajax_table').innerHTML = xmlhttp.responseText;
+            document.getElementById('container').innerHTML = xmlhttp.responseText;
     }
 
     xmlhttp.open("POST", "get_schedule.php", true);
@@ -110,13 +128,15 @@ function popupModal(e){
 }
 </script>
 <?php
+    }
 }
 else {
     echo "<h1>No schedule for $profName</h1>
-    
-    <p>$profName hasn't submitted his or her schedule yet. Please encourage him or her to submit a schedule so that students can book appointments.</p>";
-}
 
+    <p>$profName hasn't submitted his or her schedule yet. Please encourage him or her to submit a schedule so that students can book appointments.</p>
+    
+</div>";
+}
 include 'footer.php';
 ?>
 </body>

@@ -25,7 +25,15 @@ if (!file_exists($filename)) {
 
     <h2 style="font-weight: bold; color: #026342;">Upcoming appointments</h2>
 <?php
-$query = 'SELECT a.*, b.FirstName, b.LastName FROM Appointments a JOIN Users b ON (a.StudentId = b.Id) WHERE a.TeacherID = ? AND Appt_DateTime >= CURDATE() ORDER BY Appt_DateTime;';
+# delete teacher's appointments that are in the past
+$query = "DELETE FROM Appointments WHERE TeacherId = ? AND Appt_DateTime < CURDATE();";
+$stmt = $db->prepare($query);
+$stmt->bind_param("s", $_SESSION['userid']);
+$stmt->execute();
+$stmt->close();
+
+# check for appointments in the future
+$query = 'SELECT a.*, b.FirstName, b.LastName FROM Appointments a JOIN Users b ON (a.StudentId = b.Id) WHERE a.TeacherID = ? ORDER BY Appt_DateTime;';
 $stmt = $db->prepare($query);
 $stmt->bind_param("s", $_SESSION['userid']);
 $stmt->execute();
