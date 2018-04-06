@@ -34,13 +34,40 @@ $datetoinsert=$day;
 $datetoinsert.=" ";
 $datetoinsert.=$appttime;
 
-//DATABASE MySQL
-
-$stmt = $db->prepare("INSERT INTO Appointments (TeacherId, StudentId, Appt_DateTime, Room, Reason, CourseId, Notes, Appt_Status) VALUES (?,?,?,?,?,?,'','pending');");
-/* bind parameters for markers */
+# add appointment to database
+$query = "INSERT INTO Appointments (TeacherId, StudentId, Appt_DateTime, Room, Reason, CourseId, Notes, Appt_Status) VALUES (?,?,?,?,?,?,'','pending');";
+$stmt = $db->prepare($query);
 $stmt->bind_param("ssssss", $_POST['prof'], $_SESSION['userid'], $datetoinsert, $meetingroom, $reason, $mycourse);
 $stmt->execute();
 $stmt->close();
+
+$query = "SELECT Email from Users WHERE Id = ?";
+$stmt = $db->prepare($query);
+$stmt->bind_param("s", $_POST['prof']);
+$stmt->execute();
+$result = $stmt->get_result();
+$stmt->close();
+
+$row = $result->fetch_assoc();
+
+#send email
+$to = $row['Email'];
+$subject = "Appointment request from {$_SESSION['realname']}";
+$message = '<html>';
+$message .= '<body>';
+$message .= "<p>{$_SESSION['realname']} has requested an appointment with you with this message:</p>";
+$message .= "<blockquote>$reason</blockquote>";
+$message .= "<p>Please log into the <a href=\"$WEB_HOST\">Algonquin College Student-Teacher Appointment Scheduler</a> to see your pending appointment requests.</p>";
+$message .= "<p>If the link above doesn't work, copy this address into your browser: $WEB_HOST</p>";
+# change this to whatever message you want to send from Algonquin College
+$message .= "<p>Thank you, Team Slowpd.</p>";
+$message .= '</body>';
+$message .= '</html>';
+$headers = "MIME-Version: 1.0\r\n";
+$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
+$headers .= "From: patt0108@algonquinlive.com";  # <-- change to administrative email address
+
+mail($to,$subject,$message,$headers);
 ?>
 	<div class="container">
 		<div class="span10 well">		
