@@ -22,6 +22,7 @@ include 'header.php';
 $query = "SELECT a.*,
     b.Email, CONCAT(b.FirstName, ' ', b.LastName) studentname,
     (SELECT CONCAT(FirstName, ' ', LastName) FROM Users WHERE Id = a.TeacherId) teachername
+    (SELECT Email FROM Users WHERE Id = a.TeacherId) teacheremail
     FROM slowpd.Appointments a
     JOIN Users b ON (a.StudentId=b.Id)
     WHERE a.Id = ?;";
@@ -69,7 +70,8 @@ else {
         $message .= '</html>';
         $headers = "MIME-Version: 1.0\r\n";
         $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-        $headers .= "From: patt0108@algonquinlive.com";  # <-- change to administrative email address
+        # from application email address. change to $row['teacheremail'] if you want email to come from teacher
+        $headers .= "From: $EMAIL_FROM";
 
         mail($to,$subject,$message,$headers);
 
