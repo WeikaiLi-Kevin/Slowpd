@@ -20,9 +20,8 @@ include 'header.php';
 <?php
 #check that appointment exists and get details about participants
 $query = "SELECT a.*,
-    b.Email,
-    (SELECT CONCAT(FirstName, ' ', LastName) FROM Users WHERE Id = a.TeacherId) teachername,
-    (SELECT CONCAT(FirstName, ' ', LastName) FROM Users WHERE Id = a.StudentId) studentname
+    b.Email, CONCAT(b.FirstName, ' ', b.LastName) studentname,
+    (SELECT CONCAT(FirstName, ' ', LastName) FROM Users WHERE Id = a.TeacherId) teachername
     FROM slowpd.Appointments a
     JOIN Users b ON (a.StudentId=b.Id)
     WHERE a.Id = ?;";
