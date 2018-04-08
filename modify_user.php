@@ -41,24 +41,45 @@ if ($result->num_rows == 1) {
 
   <h2>User details</h2>
 
-   <form method="post" action="confirm_change.php">
-       First name: <input name="fname" value="<?=$row['FirstName']?>" required><br>
-       Last name: <input name="lname" value="<?=$row['LastName']?>" required><br>
-       Email address: <input name="email" type="email" size="20" value="<?=$row['Email']?>" required><br>
-       User type: <select name="usertype" required>
-          <option value="">-- Select user type --</option>
-           <option value="student"<? if ($row['UserType'] == 'student') echo " selected"; ?>>student</option>
-           <option value="teacher"<? if ($row['UserType'] == 'teacher') echo " selected"; ?>>teacher</option>
-           <option value="admin"<? if ($row['UserType'] == 'admin') echo " selected"; ?>>admin</option>
-       </select><br>
+   <form class="form-horizontal" method="post" action="confirm_change.php" style="max-width: 50%">
+      <div class="form-group">
+          <label for="fname" class="col-sm-3 control-label">First name:</label>
+          <div class="col-sm-9">
+              <input class="form-control" type="text" name="fname" value="<?=$row['FirstName']?>" required>          
+          </div>
+       </div>
+      <div class="form-group">
+          <label for="lname" class="col-sm-3 control-label">Last name:</label>
+          <div class="col-sm-9">
+              <input class="form-control" type="text" name="lname" value="<?=$row['LastName']?>" required>          
+          </div>
+       </div>
+       <div class="form-group">
+          <label for="email" class="col-sm-3 control-label">Email address:</label>
+          <span class="col-sm-9">
+              <input class="form-control" type="text" name="email" value="<?=$row['Email']?>" required>          
+          </span>
+       </div>
+         <div class="form-group">
+              <label for="usertype" class="col-sm-3 control-label">User type:</label>
+              <div class="col-sm-9">
+                  <select class="form-control" name="usertype" required>        
+                  <option value="">-- Select user type --</option>
+                   <option value="student"<? if ($row['UserType'] == 'student') echo " selected"; ?>>student</option>
+                   <option value="teacher"<? if ($row['UserType'] == 'teacher') echo " selected"; ?>>teacher</option>
+                   <option value="admin"<? if ($row['UserType'] == 'admin') echo " selected"; ?>>admin</option>
+               </select>                  
+            </div>
+       </div>
+
        <input type="hidden" name="userid" value="<?=$row['Id']?>">
-       <input type="submit" name="submit"> <input type="reset">
+       <input class="btn btn-primary" type="submit" name="submit"> &nbsp; <input class="btn btn-primary" type="reset">
    </form>
    
    <h2>Delete user</h2>
    
    <form method="post" action="delete_user.php">
-         <input type="submit" name="submit" value="Delete user">
+         <input class="btn btn-danger" type="submit" name="submit" value="Delete user">
          <input type="hidden" name="userid" value="<?=$row['Id']?>">
          <input type="hidden" name="email" value="<?=$row['Email']?>">
    </form>
