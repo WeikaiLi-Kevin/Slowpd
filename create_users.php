@@ -70,49 +70,45 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
-   <form method="post" action="create_users.php">
-	   	<table>
-	   	    <tr>
-	   	        <td colspan="2" class="red">User ID should be first part of email address if using an Algonquin email address</td>
-	   	    </tr>
-			<tr>
-			    <td style="font-weight: bold;">User ID:</td>
-			    <td><input class="form-control" name="userid" value="<?=$userid?>" required></td>
-			</tr>
-			<tr>
-			    <td style="font-weight: bold;">First name:</td>
-			    <td><input class="form-control" name="fname" value="<?=$fname?>" required></td>
-			</tr>
-			<tr>
-              <td style="font-weight: bold;">Last name:</td>
-               <td><input class="form-control" name="lname" value="<?=$lname?>" required></td>
-            </tr>
-            <tr>
-                <td style="font-weight: bold;">Email address:</td>
-                <td><input class="form-control" type="email" name="email"  value="<?=$email?>" required></td>
-            </tr>
-            <tr>
-                <td style="font-weight: bold;">User type:</td>
-                <td>
-                   <select name="usertype" required>
-                       <option value="">-- Select user type --</option>
-                       <option value="student"<? if ($usertype == 'student') echo " selected"; ?>>student</option>
-                       <option value="teacher"<? if ($usertype == 'teacher') echo " selected"; ?>>teacher</option>
-                       <option value="admin"<? if ($usertype == 'admin') echo " selected"; ?>>admin</option>
-                   </select>
-               </td>
-           </tr>
-			<tr>
-			    <td style="font-weight: bold;">Password:</td>
-			    <td><input class="form-control" type="password" name="password1" required></td>
-			 </tr>
-			<tr>
-			    <td style="font-weight: bold;">Re-type password:</td>
-			    <td><input class="form-control" type="password" name="password2" required></td>
-			 </tr>
-		 </table> 
+   <form class="form-horizontal" method="post" action="create_users.php" style="max-width: 50%">
+       <p class="red">User ID should be first part of email address if using an Algonquin email address</p>
+	   	<div class="form-group">
+            <label class="col-sm-4 control-label" for="userid">User ID:</label>
+            <div class="col-sm-8"><input class="form-control" name="userid" value="<?=$userid?>" required></div>
+       </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="fname">First name:</label>
+            <div class="col-sm-8"><input class="form-control" name="fname" value="<?=$fname?>" required></div>
+       </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="lname">Last name:</label>
+            <div class="col-sm-8"><input class="form-control" name="lname" value="<?=$lname?>" required></div>
+       </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="email">Email address:</label>
+            <div class="col-sm-8"><input class="form-control" type="email" name="email" value="<?=$email?>" required></div>
+       </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="usertype">User type:</label>
+            <div class="col-sm-8">
+               <select class="form-control" name="usertype" required>
+                   <option value="">-- Select user type --</option>
+                   <option value="student"<? if ($usertype == 'student') echo " selected"; ?>>student</option>
+                   <option value="teacher"<? if ($usertype == 'teacher') echo " selected"; ?>>teacher</option>
+                   <option value="admin"<? if ($usertype == 'admin') echo " selected"; ?>>admin</option>
+               </select>
+            </div>
+       </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="password1">Password:</label>
+            <div class="col-sm-8"><input class="form-control" type="password" name="password1" required></div>
+       </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="password2">Re-type password:</label>
+            <div class="col-sm-8"><input class="form-control" type="password" name="password2" required></div>
+       </div> 
 		 <br>
-		 <input class="btn btn-success" type="submit" name="submit"> <input class="btn btn-success" type="reset">
+		 <input class="btn btn-success" type="submit" name="submit"> &nbsp; <input class="btn btn-success" type="reset">
    </form>
 </div>
 <?php

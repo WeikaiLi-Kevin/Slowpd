@@ -43,26 +43,26 @@ if ($result->num_rows == 1) {
 
    <form class="form-horizontal" method="post" action="confirm_change.php" style="max-width: 50%">
       <div class="form-group">
-          <label for="fname" class="col-sm-3 control-label">First name:</label>
-          <div class="col-sm-9">
+          <label for="fname" class="col-sm-4 control-label">First name:</label>
+          <div class="col-sm-8">
               <input class="form-control" type="text" name="fname" value="<?=$row['FirstName']?>" required>          
           </div>
        </div>
       <div class="form-group">
-          <label for="lname" class="col-sm-3 control-label">Last name:</label>
-          <div class="col-sm-9">
+          <label for="lname" class="col-sm-4 control-label">Last name:</label>
+          <div class="col-sm-8">
               <input class="form-control" type="text" name="lname" value="<?=$row['LastName']?>" required>          
           </div>
        </div>
        <div class="form-group">
-          <label for="email" class="col-sm-3 control-label">Email address:</label>
-          <span class="col-sm-9">
+          <label for="email" class="col-sm-4 control-label">Email address:</label>
+          <span class="col-sm-8">
               <input class="form-control" type="text" name="email" value="<?=$row['Email']?>" required>          
           </span>
        </div>
          <div class="form-group">
-              <label for="usertype" class="col-sm-3 control-label">User type:</label>
-              <div class="col-sm-9">
+              <label for="usertype" class="col-sm-4 control-label">User type:</label>
+              <div class="col-sm-8">
                   <select class="form-control" name="usertype" required>        
                   <option value="">-- Select user type --</option>
                    <option value="student"<? if ($row['UserType'] == 'student') echo " selected"; ?>>student</option>
