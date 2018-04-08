@@ -117,14 +117,21 @@ if (isset($_POST['submit'])) {
 
    <p>Search for teachers by first name, last name, or email.</p>
     
-     <form method="post" action="student_cp.php">
-	 <table>
-        <tr><td style="font-weight: bold ;">First name: </td><td><input class="form-control" name="fname" value="<?=$fname?>"></td></tr>
-        <tr><td style="font-weight: bold ;">Last name: </td><td><input class="form-control" name="lname" value="<?=$lname?>"></td></tr>
-        <tr><td style="font-weight: bold ;">Email address: </td><td><input class="form-control" name="email" type="email" value="<?=$email?>"></td></tr>
-     </table> 
-	 <br>
-        <input class="btn btn-success" name="submit" type="submit"> <input class="btn btn-success" type="reset">
+     <form class="form-horizontal" method="post" action="student_cp.php" style="max-width: 50%">
+        <div class="group-form">
+            <label class="col-sm-4 control-label" for="fname">First name:</label>
+            <div class="col-sm-8"><input class="form-control" name="fname" value="<?=$fname?>"></div>
+         </div>
+        <div class="group-form">
+            <label class="col-sm-4 control-label" for="lname">Last name:</label>
+            <div class="col-sm-8"><input class="form-control" name="lname" value="<?=$lname?>"></div>
+         </div>
+         <div class="group-form">
+             <label class="col-sm-4 control-label" for="email">Email address:</label>
+             <div class="col-sm-8"><input class="form-control" name="email" type="email" value="<?=$email?>"></div>
+         </div>
+	     <br>
+        <input class="btn btn-success" name="submit" type="submit"> &nbsp; <input class="btn btn-success" type="reset">
     </form>
 </div>
     
