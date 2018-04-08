@@ -50,69 +50,73 @@ else if (isset($_POST['submit'])) {
     
     if ($fname && $lname && $email && $emaildomain && isset($_POST['password1']) && isset($_POST['password2'])) {
         if ($_POST['password1'] == $_POST['password2']) {
-            # check if user already registered
-            $query = 'SELECT * FROM Users WHERE Id = ?';
-            $stmt = $db->prepare($query);
-            $stmt->bind_param("s", $email);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $stmt->close();
-            
-            if ($result->num_rows == 0) {
-                # encrypt the password for security
-                $password = password_hash($_POST['password1'], PASSWORD_DEFAULT);
-                
-                # must create $email variable so we don't get "Cannot pass parameter 5 by reference" during bind_param
-                $fullemail = "$email@$emaildomain";
-                # algonquinlive.com = student, algonquincollege.com = teacher
-                $usertype = $emaildomain == 'algonquinlive.com' ? 'student' : 'teacher';
-                # creates 23 character hash. Second parameter is $more_entropy which must be true under CYGWIN.
-                $confirmationHash = uniqid("", TRUE);
-
-                $query = 'INSERT INTO Users VALUES (?, ?, ?, ?, ?, ?, ?)';
+            if (preg_match('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$', $_POST['password1']) {
+                # check if user already registered
+                $query = 'SELECT * FROM Users WHERE Id = ?';
                 $stmt = $db->prepare($query);
-                $stmt->bind_param("sssssss", $email, $fname, $lname, $fullemail, $password, $usertype, $confirmationHash);
+                $stmt->bind_param("s", $email);
                 $stmt->execute();
                 $result = $stmt->get_result();
                 $stmt->close();
-                
-                # *** Change $WEB_HOST in db_vars.php to point to wherever this website is hosted from!!! ***
-                $confUrl = "$WEB_HOST/register.php?conf=$confirmationHash";
-                
-                #send email
-                $to = $fullemail;
-                $subject = "Confirmation email for Algonquin Student-Teacher Appointment Scheduler";
-                $message = '<html>';
-                $message .= '<body>';
-                $message .= '<p>Thank you for registering an account with the Algonquin Student-Teacher Appointment Scheduler</p>';
-                $message .= "<p><a href=\"$confUrl\">Click here to confirm registration</a></p>";
-                $message .= "<p>If the link above doesn't work, copy this address into your browser: $confUrl</p>";
-                # change this to whatever message you want to send from Algonquin College
-                $message .= "<p>Thank you, Team Slowpd.</p>";
-                $message .= '</body>';
-                $message .= '</html>';
-                $headers = "MIME-Version: 1.0\r\n";
-                $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-                $headers .= "From: $EMAIL_FROM";
-                
-                mail($to,$subject,$message,$headers);
-                
-                # print successful registration page, and then end script processing
-                echo '<h1>Registration complete</h1>
 
-<p>You have successfully registered. Go to <a href="index.php">login page</a>.</p>';
+                if ($result->num_rows == 0) {
+                    # encrypt the password for security
+                    $password = password_hash($_POST['password1'], PASSWORD_DEFAULT);
 
-                include 'footer.php';
+                    # must create $email variable so we don't get "Cannot pass parameter 5 by reference" during bind_param
+                    $fullemail = "$email@$emaildomain";
+                    # algonquinlive.com = student, algonquincollege.com = teacher
+                    $usertype = $emaildomain == 'algonquinlive.com' ? 'student' : 'teacher';
+                    # creates 23 character hash. Second parameter is $more_entropy which must be true under CYGWIN.
+                    $confirmationHash = uniqid("", TRUE);
 
-                echo '</body>
-</html>';
+                    $query = 'INSERT INTO Users VALUES (?, ?, ?, ?, ?, ?, ?)';
+                    $stmt = $db->prepare($query);
+                    $stmt->bind_param("sssssss", $email, $fname, $lname, $fullemail, $password, $usertype, $confirmationHash);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $stmt->close();
 
-                exit(); # close page so user doesn't see registration form
+                    # *** Change $WEB_HOST in db_vars.php to point to wherever this website is hosted from!!! ***
+                    $confUrl = "$WEB_HOST/register.php?conf=$confirmationHash";
+
+                    #send email
+                    $to = $fullemail;
+                    $subject = "Confirmation email for Algonquin Student-Teacher Appointment Scheduler";
+                    $message = '<html>';
+                    $message .= '<body>';
+                    $message .= '<p>Thank you for registering an account with the Algonquin Student-Teacher Appointment Scheduler</p>';
+                    $message .= "<p><a href=\"$confUrl\">Click here to confirm registration</a></p>";
+                    $message .= "<p>If the link above doesn't work, copy this address into your browser: $confUrl</p>";
+                    # change this to whatever message you want to send from Algonquin College
+                    $message .= "<p>Thank you, Team Slowpd.</p>";
+                    $message .= '</body>';
+                    $message .= '</html>';
+                    $headers = "MIME-Version: 1.0\r\n";
+                    $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
+                    $headers .= "From: $EMAIL_FROM";
+
+                    mail($to,$subject,$message,$headers);
+
+                    # print successful registration page, and then end script processing
+                    echo '<h1>Registration complete</h1>
+
+    <p>You have successfully registered. Go to <a href="index.php">login page</a>.</p>';
+
+                    include 'footer.php';
+
+                    echo '</body>
+    </html>';
+
+                    exit(); # close page so user doesn't see registration form
+                }
+                else {
+                    echo '<p class="red">You are already registered. If you have not yet confirmed your registration, please check your email for your confirmation link.</p>';
+                }
             }
             else {
-                echo '<p class="red">You are already registered. If you have not yet confirmed your registration, please check your email for your confirmation link.</p>';
+                echo '<p class="red">Password doesn\'t meet minimum strength requirements.</p>';
             }
-            
         }
         else {
             echo '<p class="red">Passwords don\'t match.</p>';
@@ -135,9 +139,9 @@ else if (isset($_POST['submit'])) {
            <option value="algonquinlive.com"<? if ($emaildomain == 'algonquinlive.com') echo " selected"; ?>>algonquinlive.com (student)</option>
            <option value="algonquincollege.com"<? if ($emaildomain == 'algonquincollege.com') echo " selected"; ?>>algonquincollege.com (teacher)</option>
        </select></td></tr>
-	   
-			<tr><td style="font-weight: bold;">Password: </td><td><input class="form-control" type="password" name="password1" required></td></tr>
-			<tr><td style="font-weight: bold;">Re-type password: </td><td><input class="form-control" type="password" name="password2" required></td></tr>
+	   <tr><td colspan="2">Passwords must be a minimum of 8 characters and have at least one uppercase letter, one lowercase letter, and one number.</td></tr>
+			<tr><td style="font-weight: bold;">Password: </td><td><input class="form-control" type="password" name="password1" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" required></td></tr>
+			<tr><td style="font-weight: bold;">Re-type password: </td><td><input class="form-control" type="password" name="password2" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" required></td></tr>
 		 </table> 
 		 <br>
 		 <input class="btn btn-success" type="submit" name="submit"> <input class="btn btn-success" type="reset">
