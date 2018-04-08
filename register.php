@@ -50,7 +50,7 @@ else if (isset($_POST['submit'])) {
     
     if ($fname && $lname && $email && $emaildomain && isset($_POST['password1']) && isset($_POST['password2'])) {
         if ($_POST['password1'] == $_POST['password2']) {
-            if (preg_match('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$', $_POST['password1'])) {
+            if (preg_match('/(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}/', $_POST['password1'])) {
                 # check if user already registered
                 $query = 'SELECT * FROM Users WHERE Id = ?';
                 $stmt = $db->prepare($query);
