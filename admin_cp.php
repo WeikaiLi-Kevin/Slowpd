@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
         if ($result->num_rows == 0)
             echo "<p>No users matched your search.</p>";
         else {
-            echo "<table class=\"border\">
+            echo "<table class=\"table table-bordered\">
             <caption>Results</caption>
             <tr>
                 <th>User ID</th>
@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
                 <td>$status</td>
                 <td>
                     <form method="post" action="modify_user.php">
-                        <input type="submit" name="submit" value="Modify">
+                        <input type="submit" name="submit" class="btn btn-primary" value="Modify">
                         <input type="hidden" name="userid" value="{$row['Id']}">
                         <input type="hidden" name="email" value="{$row['Email']}">
                     </form>
@@ -88,9 +88,9 @@ END;
    <p>Search for users by first name, last name, or email.</p>
     
      <form method="post" action="admin_cp.php">
-       <label class="checkbox-inline" for="students"><input type="checkbox" name="students" id="students">Students</label>
-       <label class="checkbox-inline" for="teachers"><input type="checkbox" name="teachers">Teachers</label>
-       <label class="checkbox-inline" for="admins"><input type="checkbox" name="admins">Administrators</label>
+       <label class="checkbox-inline" for="students"><input type="checkbox" name="students"<?php if (isset($_POST['students'])) echo ' checked'; ?>>Students</label>
+       <label class="checkbox-inline" for="teachers"><input type="checkbox" name="teachers" <?php if (isset($_POST['teachers'])) echo ' checked'; ?>>Teachers</label>
+       <label class="checkbox-inline" for="admins"><input type="checkbox" name="admins"<?php if (isset($_POST['admins'])) echo ' checked'; ?>>Administrators</label>
        
         
         <table>

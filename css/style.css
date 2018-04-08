@@ -5,7 +5,5 @@ a:visited { color: blue; }
 
 .red { color: red; }
 
-.border, .border td, .border th { border: 1px solid black; }
-
 nav#top { text-align: right; }
 
