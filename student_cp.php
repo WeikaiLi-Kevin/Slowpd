@@ -120,15 +120,15 @@ if (isset($_POST['submit'])) {
      <form class="form-horizontal" method="post" action="student_cp.php" style="max-width: 50%">
         <div class="group-form">
             <label class="col-sm-4 control-label" for="fname">First name:</label>
-            <div class="col-sm-8"><input class="form-control" name="fname" value="<?=$fname?>"></div>
+            <div class="col-sm-8"><input class="form-control" type="text" name="fname" id="fname" value="<?=$fname?>"></div>
          </div>
         <div class="group-form">
             <label class="col-sm-4 control-label" for="lname">Last name:</label>
-            <div class="col-sm-8"><input class="form-control" name="lname" value="<?=$lname?>"></div>
+            <div class="col-sm-8"><input class="form-control" type="text" name="lname" id="lname" value="<?=$lname?>"></div>
          </div>
          <div class="group-form">
              <label class="col-sm-4 control-label" for="email">Email address:</label>
-             <div class="col-sm-8"><input class="form-control" name="email" type="email" value="<?=$email?>"></div>
+             <div class="col-sm-8"><input class="form-control" type="text" name="email" id="email" type="email" value="<?=$email?>"></div>
          </div>
 	     <br>
         <input class="btn btn-success" name="submit" type="submit"> &nbsp; <input class="btn btn-success" type="reset">

@@ -87,18 +87,25 @@ END;
 ?>
    <p>Search for users by first name, last name, or email.</p>
     
-     <form method="post" action="admin_cp.php">
-       <label class="checkbox-inline" for="students"><input type="checkbox" name="students"<?php if (isset($_POST['students'])) echo ' checked'; ?>>Students</label>
-       <label class="checkbox-inline" for="teachers"><input type="checkbox" name="teachers" <?php if (isset($_POST['teachers'])) echo ' checked'; ?>>Teachers</label>
-       <label class="checkbox-inline" for="admins"><input type="checkbox" name="admins"<?php if (isset($_POST['admins'])) echo ' checked'; ?>>Administrators</label>
-       
-        
-        <table>
-            <tr><td style="font-weight: bold ;">First name: </td><td><input class="form-control" name="fname" value="<?=$fname?>"></td></tr>
-            <tr><td style="font-weight: bold ;">Last name: </td><td><input class="form-control" name="lname" value="<?=$lname?>"></td></tr>
-            <tr><td style="font-weight: bold ;">Email address: </td><td><input class="form-control" name="email" type="email" value="<?=$email?>"></td></tr>
-            <tr><td></td><td><input class="btn btn-success" name="submit" type="submit"> &nbsp; <input class="btn btn-success" type="reset"></td></tr>
-         </table>     
+     <form class="form-horizontal" method="post" action="admin_cp.php" style="max-width: 50%">
+      <div class="form-group">
+           <label class="checkbox-inline" for="students"><input type="checkbox" name="students" id="students"<?php if (isset($_POST['students'])) echo ' checked'; ?>>Students</label>
+           <label class="checkbox-inline" for="teachers"><input type="checkbox" name="teachers" id="teachers"<?php if (isset($_POST['teachers'])) echo ' checked'; ?>>Teachers</label>
+           <label class="checkbox-inline" for="admins"><input type="checkbox" name="admins" id="admins"<?php if (isset($_POST['admins'])) echo ' checked'; ?>>Administrators</label>
+         </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="fname">First name:</label>
+            <div class="col-sm-8"><input class="form-control" name="fname" id="fname" value="<?=$fname?>"></div>
+         </div>
+           <div class="form-group">
+               <label class="col-sm-4 control-label" for="lname">Last name:</label>
+               <div class="col-sm-8"><input class="form-control" name="lname" id="lname" value="<?=$lname?>"></div>
+         </div>
+           <div class="form-group">
+               <label class="col-sm-4 control-label" for="email">Email address:</label>
+               <div class="col-sm-8"><input class="form-control" name="email" id="email" type="email" value="<?=$email?>"></div>
+         </div>
+        <input class="btn btn-success" name="submit" type="submit"> &nbsp; <input class="btn btn-success" type="reset">
     </form>
     
     <h2 style="font-weight: bold ;color:#026342"> Create users</h2>

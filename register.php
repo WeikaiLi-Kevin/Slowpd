@@ -132,15 +132,15 @@ else if (isset($_POST['submit'])) {
    <form class="form-horizontal" method="post" action="register.php" style="max-width: 60%">
         <div class="form-group">
             <label class="col-sm-4 control-label" for="fname">First name:</label>
-            <div class="col-sm-8"><input class="form-control" name="fname" value="<?=$fname?>" required></div>
+            <div class="col-sm-8"><input class="form-control" name="fname" id="fname" value="<?=$fname?>" required></div>
        </div>
         <div class="form-group">
             <label class="col-sm-4 control-label" for="lname">Last name:</label>
-            <div class="col-sm-8"><input class="form-control" name="lname" value="<?=$lname?>" required></div>
+            <div class="col-sm-8"><input class="form-control" name="lname" id="lname" value="<?=$lname?>" required></div>
        </div>
         <div class="form-group">
             <label class="col-sm-4 control-label" for="email">Email address:</label>
-            <div class="col-sm-3"><input class="form-control" name="email" maxlength="8"  value="<?=$email?>" required></div>
+            <div class="col-sm-3"><input class="form-control" name="email" id="email" maxlength="8"  value="<?=$email?>" required></div>
             <div class="col-sm-1">@</div>
             <div class="col-sm-4">
                <select class="form-control" name="emaildomain" required>
@@ -153,11 +153,11 @@ else if (isset($_POST['submit'])) {
        <div class="col-sm-12">Passwords must be a minimum of 8 characters and have at least one uppercase letter, one lowercase letter, and one number.</div>
         <div class="form-group">
             <label class="col-sm-4 control-label" for="password1">Password:</label>
-            <div class="col-sm-8"><input class="form-control" type="password" name="password1" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" required></div>
+            <div class="col-sm-8"><input class="form-control" type="password" name="password1" id="password1" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" required></div>
        </div>
         <div class="form-group">
             <label class="col-sm-4 control-label" for="password2">Re-type password:</label>
-            <div class="col-sm-8"><input class="form-control" type="password" name="password2" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" required></div>
+            <div class="col-sm-8"><input class="form-control" type="password" name="password2" id="password2" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" required></div>
        </div>
      <br>
      <input class="btn btn-success" type="submit" name="submit"> <input class="btn btn-success" type="reset">

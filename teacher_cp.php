@@ -67,7 +67,7 @@ else {
         <td>{$row['Appt_Status']}</td>
         <td><form id=\"{$row['FirstName']}_{$row['LastName']}_{$row['Id']}_{$date[0]}_{$date[1]}\">";
         if ($row['Appt_Status'] == 'pending')
-            echo "<input type=\"button\" class=\"btn btn-success\" onclick=\"popupModal(this)\" value=\"Accept\"><input type=\"button\" class=\"btn btn-danger\" onclick=\"popupModal(this)\" value=\"Reject\">";
+            echo "<input type=\"button\" class=\"btn btn-success\" onclick=\"popupModal(this)\" value=\"Accept\"> &nbsp; <input type=\"button\" class=\"btn btn-danger\" onclick=\"popupModal(this)\" value=\"Reject\">";
         else
             echo "<input type=\"button\" class=\"btn btn-danger\" onclick=\"popupModal(this)\" value=\"Cancel\">";
         

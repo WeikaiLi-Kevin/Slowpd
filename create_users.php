@@ -74,24 +74,24 @@ if (isset($_POST['submit'])) {
        <p class="red">User ID should be first part of email address if using an Algonquin email address</p>
 	   	<div class="form-group">
             <label class="col-sm-4 control-label" for="userid">User ID:</label>
-            <div class="col-sm-8"><input class="form-control" name="userid" value="<?=$userid?>" required></div>
+            <div class="col-sm-8"><input class="form-control" name="userid" id="userid" value="<?=$userid?>" required></div>
        </div>
         <div class="form-group">
             <label class="col-sm-4 control-label" for="fname">First name:</label>
-            <div class="col-sm-8"><input class="form-control" name="fname" value="<?=$fname?>" required></div>
+            <div class="col-sm-8"><input class="form-control" name="fname" id="fname" value="<?=$fname?>" required></div>
        </div>
         <div class="form-group">
             <label class="col-sm-4 control-label" for="lname">Last name:</label>
-            <div class="col-sm-8"><input class="form-control" name="lname" value="<?=$lname?>" required></div>
+            <div class="col-sm-8"><input class="form-control" name="lname" id="lname" value="<?=$lname?>" required></div>
        </div>
         <div class="form-group">
             <label class="col-sm-4 control-label" for="email">Email address:</label>
-            <div class="col-sm-8"><input class="form-control" type="email" name="email" value="<?=$email?>" required></div>
+            <div class="col-sm-8"><input class="form-control" type="email" name="email" id="email" value="<?=$email?>" required></div>
        </div>
         <div class="form-group">
             <label class="col-sm-4 control-label" for="usertype">User type:</label>
             <div class="col-sm-8">
-               <select class="form-control" name="usertype" required>
+               <select class="form-control" name="usertype" id="usertype" required>
                    <option value="">-- Select user type --</option>
                    <option value="student"<? if ($usertype == 'student') echo " selected"; ?>>student</option>
                    <option value="teacher"<? if ($usertype == 'teacher') echo " selected"; ?>>teacher</option>
@@ -101,11 +101,11 @@ if (isset($_POST['submit'])) {
        </div>
         <div class="form-group">
             <label class="col-sm-4 control-label" for="password1">Password:</label>
-            <div class="col-sm-8"><input class="form-control" type="password" name="password1" required></div>
+            <div class="col-sm-8"><input class="form-control" type="password" name="password1" id="password1" required></div>
        </div>
         <div class="form-group">
             <label class="col-sm-4 control-label" for="password2">Re-type password:</label>
-            <div class="col-sm-8"><input class="form-control" type="password" name="password2" required></div>
+            <div class="col-sm-8"><input class="form-control" type="password" name="password2" id="password2" required></div>
        </div> 
 		 <br>
 		 <input class="btn btn-success" type="submit" name="submit"> &nbsp; <input class="btn btn-success" type="reset">
