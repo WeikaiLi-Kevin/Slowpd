@@ -55,7 +55,7 @@ else {
         <td>{$row['Notes']}</td>
         <td>{$row['Appt_Status']}</td>
         <td><form method=\"post\" action=\"cancel_appointment.php\">
-            <input class=\"btn btn-light\" type=\"submit\" name=\"submit\" value=\"Cancel\">
+            <input class=\"btn btn-danger\" type=\"submit\" name=\"submit\" value=\"Cancel\">
             <input type=\"hidden\" name=\"appointment\" value=\"{$row['Id']}\">
             </form>
         </td>
@@ -93,7 +93,7 @@ if (isset($_POST['submit'])) {
             <tr>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Check schedule</th>
+                <th>View schedule</th>
             </tr>\n";
 
             while ($row = $result->fetch_assoc()) {
@@ -102,7 +102,7 @@ if (isset($_POST['submit'])) {
                 echo "<tr>
                 <td>{$row['FirstName']} {$row['LastName']}</td>
                 <td>{$row['Email']}</td>
-                <td><form method=\"post\" action=\"schedule_viewer.php\"><input name=\"submit\" type=\"submit\" value=\"Check\"><input type=\"hidden\" name=\"teacher\" value=\"{$row['Id']}\"><input type=\"hidden\" name=\"teachername\" value=\"{$row['FirstName']} {$row['LastName']}\"></td>
+                <td><form method=\"post\" action=\"schedule_viewer.php\"><input name=\"submit\" type=\"submit\" class=\"btn btn-primary btncheck\" value=\"View\"><input type=\"hidden\" name=\"teacher\" value=\"{$row['Id']}\"><input type=\"hidden\" name=\"teachername\" value=\"{$row['FirstName']} {$row['LastName']}\"></td>
             </tr>\n";
             }
 
