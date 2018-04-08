@@ -72,15 +72,18 @@ if (isset($_POST['submit'])) {
 }
 ?>
    <br>
-    <form method="post" action="index.php">
-	<table>
-        <tr><td style="font-weight: bold ; font-size: 20px">Username: </td><td><input name="username" class="form-control" value="<?=$username?>" required></td></tr>
-		<tr><td style="font-weight: bold; font-size: 20px">Password: </td><td><input name="password" class="form-control" type="password" required></td></tr>
-	</table>
-	<br>
-	<input name="submit" class="btn btn-success" type="submit" value="Login"> <input class="btn btn-success" type="reset">
+    <form class="form-horizontal" method="post" action="index.php" style="max-width: 50%">
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="username">Username:</label>
+            <div class="col-sm-8"><input name="username" class="form-control" value="<?=$username?>" required></div>
+        </div>
+		<div class="form-group">
+		    <label class="col-sm-4 control-label" for="password">Password:</label>
+            <div class="col-sm-8"><input name="password" class="form-control" type="password" required></div>
+        </div>
+	<input name="submit" class="btn btn-success" type="submit" value="Login"> &nbsp; <input class="btn btn-success" type="reset">
     </form>
-    
+    <br>
     <p>Not registered? Register <a href="register.php">here</a>.</p>
 	
 	
