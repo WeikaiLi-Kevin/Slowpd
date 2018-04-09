@@ -3,7 +3,7 @@ include 'session_include.php';
 session_check('teacher');
 
 # page wasn't reached by POST from teacher_cp.php
-if (!isset($_POST['submit']) || ($_POST['submit'] != 'Accept' && $_POST['submit'] != 'Reject' && $_POST['submit'] != 'Cancel'))
+if (!isset($_POST['submit']) || !isset($_POST['appt']) || ($_POST['submit'] != 'Accept' && $_POST['submit'] != 'Reject' && $_POST['submit'] != 'Cancel'))
     header('Location:teacher_cp.php');
 ?>
 <!DOCTYPE html>
@@ -18,16 +18,17 @@ include 'header.php';
     <h1><?=$_POST['submit']?> Appointment</h1>
 
 <?php
+    var_dump($_POST);
 #check that appointment exists and get details about participants
 $query = "SELECT a.*,
     b.Email, CONCAT(b.FirstName, ' ', b.LastName) studentname,
-    (SELECT CONCAT(FirstName, ' ', LastName) FROM Users WHERE Id = a.TeacherId) teachername
+    (SELECT CONCAT(FirstName, ' ', LastName) FROM Users WHERE Id = a.TeacherId) teachername,
     (SELECT Email FROM Users WHERE Id = a.TeacherId) teacheremail
     FROM slowpd.Appointments a
     JOIN Users b ON (a.StudentId=b.Id)
     WHERE a.Id = ?;";
 $stmt = $db->prepare($query);
-$stmt->bind_param("s", $_POST['appt']);
+$stmt->bind_param("i", strtoint($_POST['appt']));
 $stmt->execute();
 $result = $stmt->get_result();
 $stmt->close();
