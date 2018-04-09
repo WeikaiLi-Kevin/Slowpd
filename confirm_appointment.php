@@ -73,7 +73,7 @@ mail($to,$subject,$message,$headers);
 		<div class="span10 well">		
 			<div align="center">
 				<div class="row"><div class="span1"><h1>Appointment Requested</h1></div></div>
-				<p>The teacher has been notified of your request. Appointments are confirmed once you receive a confirmation email from the professor.</p>
+				<p>The teacher has been notified of your request. Appointments are confirmed once you receive a confirmation email from the teacher.</p>
 				<p><strong>Appointment: </strong><?=$datetoinsert?></p>
 				<p><strong>Teacher: </strong><?=$_POST['profname']?></p>
 				<p><strong>Student: </strong><?=$_SESSION['realname']?></p>
