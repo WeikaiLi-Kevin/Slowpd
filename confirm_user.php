@@ -28,7 +28,7 @@ else
 ?>
     <p>Return to <a href="admin_cp.php">Control Panel</a>.</p>
 </div>
-<?
+<?php
 $stmt->close();
 
 include 'footer.php';

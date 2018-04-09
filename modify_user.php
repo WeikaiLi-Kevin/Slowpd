@@ -31,7 +31,7 @@ if ($result->num_rows == 1) {
  <h2>User is not confirmed</h2>
  
     <form method="post" action="confirm_user.php">
-        <input type="submit" name="submit" value="Confirm user">
+        <input class="btn btn-success" type="submit" name="submit" value="Confirm user">
         <input type="hidden" name="userid" value="<?=$row['Id']?>">
          <input type="hidden" name="email" value="<?=$row['Email']?>">
     </form>
