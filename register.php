@@ -25,20 +25,14 @@ if (isset($_GET['conf'])) {
         <p>It looks like you're already registered. You can delete your confirmation email.</p>";
     }
     else {
-        include 'header.php';
         echo "<h1>Registration successful</h1>
         
 <p>Thank you for confirming your registration. You can delete your confirmation email.</p>\n";
     }
     $stmt->close();
-    echo '<p><a href="index.php">Log in</a></p>';
+    echo '<p><a href="index.php"><input type="button" class="btn btn-success" value="Login"></a></p>';
     
-    include 'footer.php';
-
-    echo '</body>
-</html>';
-
-    exit(); # close page so user doesn't see registration form
+    endpage(); # close page so user doesn't see registration form
 }
 else if (isset($_POST['submit'])) {
     # using these variables to re-populate fields so that user doesn't have to re-enter every field if the form doesn't validate
@@ -103,12 +97,7 @@ else if (isset($_POST['submit'])) {
 
     <p>You have successfully registered. Go to <a href="index.php">login page</a>.</p>';
 
-                    include 'footer.php';
-
-                    echo '</body>
-    </html>';
-
-                    exit(); # close page so user doesn't see registration form
+                    endpage(); # close page so user doesn't see registration form
                 }
                 else {
                     echo '<p class="red">You are already registered. If you have not yet confirmed your registration, please check your email for your confirmation link.</p>';
@@ -140,9 +129,9 @@ else if (isset($_POST['submit'])) {
        </div>
         <div class="form-group">
             <label class="col-sm-4 control-label" for="email">Email address:</label>
-            <div class="col-sm-3"><input class="form-control" name="email" id="email" maxlength="8"  value="<?=$email?>" required></div>
+            <div class="col-sm-2"><input class="form-control" name="email" id="email" maxlength="8"  value="<?=$email?>" required></div>
             <div class="col-sm-1">@</div>
-            <div class="col-sm-4">
+            <div class="col-sm-5">
                <select class="form-control" name="emaildomain" required>
                    <option value="">-- Select email domain --</option>
                    <option value="algonquinlive.com"<? if ($emaildomain == 'algonquinlive.com') echo " selected"; ?>>algonquinlive.com (student)</option>

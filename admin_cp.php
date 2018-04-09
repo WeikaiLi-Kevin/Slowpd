@@ -89,9 +89,9 @@ END;
     
      <form class="form-horizontal" method="post" action="admin_cp.php" style="max-width: 50%">
       <div class="form-group">
-           <label class="checkbox-inline" for="students"><input type="checkbox" name="students" id="students"<?php if (isset($_POST['students'])) echo ' checked'; ?>>Students</label>
-           <label class="checkbox-inline" for="teachers"><input type="checkbox" name="teachers" id="teachers"<?php if (isset($_POST['teachers'])) echo ' checked'; ?>>Teachers</label>
-           <label class="checkbox-inline" for="admins"><input type="checkbox" name="admins" id="admins"<?php if (isset($_POST['admins'])) echo ' checked'; ?>>Administrators</label>
+           <label class="form-check-label"><input type="checkbox" class="form-check-input" name="students" id="students"<?php if (isset($_POST['students'])) echo ' checked'; ?>> Students</label> &nbsp;
+           <label class="form-check-label" for="teachers"><input class="form-check-input" type="checkbox" name="teachers" id="teachers"<?php if (isset($_POST['teachers'])) echo ' checked'; ?>> Teachers</label> &nbsp;
+           <label class="form-check-label" for="admins"><input class="form-check-input" type="checkbox" name="admins" id="admins"<?php if (isset($_POST['admins'])) echo ' checked'; ?>> Administrators</label>
          </div>
         <div class="form-group">
             <label class="col-sm-4 control-label" for="fname">First name:</label>

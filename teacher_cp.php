@@ -21,7 +21,20 @@ if (!file_exists($filename)) {
     echo '<p class="text-danger">You have not created a schedule for this semester. Students will not be able to request appointments with you until you create an availability schedule.</p>';
 }
 ?>
-    <p><a href="schedule_editor.php"><input type="button" class="btn btn-primary btncheck" value="Edit your schedule"></a></p>
+  <form action="schedule_editor.php" method="post" enctype="multipart/form-data" style=
+"max-width: 50%">
+       <table class="table table-bordered">
+         <tr>
+             <td><label for="edit">Edit schedule online</label></td>
+              <td><a href="schedule_editor.php"><input type="button" class="btn btn-primary btncheck" value="Edit your schedule"></a></td>
+         </tr>
+          <tr>
+              <td><label for="upload">Upload schedule from file</label></td>
+              <td><input type="file" name="upload" id="upload" class="form-control-file" required><br>
+              <input class="btn btn-primary" type="submit" name="submit" value="Upload"></td>
+          </tr>
+       </table>
+    </form>
 
     <h2 style="font-weight: bold; color: #026342;">Upcoming appointments</h2>
 <?php

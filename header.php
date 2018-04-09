@@ -10,6 +10,15 @@
 
 <body class="bg-success">
 <?php
+# call when you want to stop executing PHP and end page gracefully
+function endpage() {
+    echo '</div>
+    <footer>&copy; 2018 Slowpd. All rights reserved.</footer>
+</body>
+</html>';
+    exit();
+}
+    
 date_default_timezone_set('America/Toronto');
 include 'db_vars.php';
 
