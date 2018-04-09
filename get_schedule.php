@@ -6,13 +6,16 @@ include 'db_vars.php';
 $db = new mysqli($DB_HOST, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
 $db->set_charset("utf8");
 
-
 # calling page provides Monday for week to check
 $mon = $_POST['date'];   # date in seconds from Unix epoch
 $tue = $mon + 86400;    # 86400 seconds per day
 $wed = $tue + 86400;
 $thu = $wed + 86400;
 $fri = $thu + 86400;
+
+# Previous week's Friday at 7:30 pm. If the previous Friday at 7:30 pm is in the past,
+# there are no bookable time slots in the previous week, so don't allow navigating to previous week
+$lastFri = $fri - 534600;
 
 $days = [date("mdY",$mon), date("mdY",$tue), date("mdY",$wed), date("mdY",$thu), date("mdY",$fri)];
 $daynames = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
@@ -28,7 +31,6 @@ $stmt->execute();
 $result = $stmt->get_result();
 $stmt->close();
 $db->close();
-
 
 if ($result->num_rows > 0) {
     // output data of each row
@@ -53,8 +55,8 @@ $myJSON = json_encode($week);
         <div class="standings col-sm-12 well">
             <div align="center" class="col-sm-12">
                 <h1>Schedule for <?=$_POST['profname']?></h1>
-                <input type="button" class="btn btn-light" value="Previous week"<?php if ($mon > time()) { echo 'onclick="monday -= 604800000; getCalendar();"'; } else { echo 'disabled'; }?>> 
-                <input type="button" class="btn btn-light" value="Next week" onclick="monday += 604800000; getCalendar();">
+                <input type="button" class="btn btn-success" value="Previous week"<?php if ($lastFri < time()) { echo 'disabled'; } else { echo 'onclick="monday -= 604800000; getCalendar();"'; }?>> 
+                <input type="button" class="btn btn-success" value="Next week" onclick="monday += 604800000; getCalendar();">
             </div>
 
 				<table class="table table-hover" id="standingstable">
