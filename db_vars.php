@@ -5,7 +5,7 @@ $DB_USERNAME = "root";
 $DB_PASSWORD = "mysql";
 $DB_DATABASE = "slowpd";
 
-# "from" address for emails from the application
+# "from" address for emails from the application, probably an administrative or no-reply account
 $EMAIL_FROM = 'patt0108@algonquinlive.com';
 
 # base URL for application, used for links in email notifications
