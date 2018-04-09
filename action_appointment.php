@@ -18,7 +18,6 @@ include 'header.php';
     <h1><?=$_POST['submit']?> Appointment</h1>
 
 <?php
-    var_dump($_POST);
 #check that appointment exists and get details about participants
 $query = "SELECT a.*,
     b.Email, CONCAT(b.FirstName, ' ', b.LastName) studentname,
@@ -28,7 +27,7 @@ $query = "SELECT a.*,
     JOIN Users b ON (a.StudentId=b.Id)
     WHERE a.Id = ?;";
 $stmt = $db->prepare($query);
-$stmt->bind_param("i", strtoint($_POST['appt']));
+$stmt->bind_param("s", $_POST['appt']);
 $stmt->execute();
 $result = $stmt->get_result();
 $stmt->close();
