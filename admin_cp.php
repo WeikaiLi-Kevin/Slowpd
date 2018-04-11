@@ -1,4 +1,12 @@
 <?php
+/*
+admin_cp.php
+Created by Harvey Patterson
+Modified by Slowpd
+
+This is the home page or portal for administrators. This page is reached automatically when an admin logs in. This page allows admins to search for users, whereafter they can confirm, modify, or delete the users returned by the search. Admins can also create users of any level by clicking the Create Users link.
+*/
+
 include 'session_include.php';
 session_check('admin');
 ?>

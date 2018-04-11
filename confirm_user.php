@@ -1,4 +1,12 @@
 <?php
+/*
+confirm_user.php
+Created by Jie Wang
+Modified by Slowpd
+
+This page is reached by POST from modify_user.php when an administrator confirms a user who has registered but whose account is still locked. Most likely, the user has lost or did not receive the confirmation email (always check your spam folder).
+*/
+
 include 'session_include.php';
 session_check('admin');
 

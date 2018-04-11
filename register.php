@@ -1,3 +1,16 @@
+<?php
+/*
+register.php
+Created by Harvey Patterson
+Modified by Philip Deck
+
+This page allows users to register. If the page is reached by direct navigation, a form is printed to allow the user to register. The form submits to this page using POST.
+
+If this page is reached by POST, the form is validated and the page attempts to register the user. If the form validates and the user is not already registered, a new user is added to the database, locked with a unique confirmation hash, and an email is sent to the user at the email address they provided, with a link to this page that contains the confirmation hash in the URL (so that the hash can be accessed via GET). The point of this is to ensure that users are who they say they are: they must register using an Algonquin email address, and they must confirm that they own that address by providing the confirmation hash that is sent to that address.
+
+If this page is reached by GET, the confirmation hash is checked against the database. The hash will be in the ConfirmationHash column for the user if they have not already confirmed their registration.
+*/
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -79,7 +92,8 @@ else if (isset($_POST['submit'])) {
                     $message = '<html>';
                     $message .= '<body>';
                     $message .= '<p>Thank you for registering an account with the Algonquin Student-Teacher Appointment Scheduler</p>';
-                    $message .= "<p><a href=\"$confUrl\">Click here to confirm registration</a></p>";
+                    $message .= "<p>Your username is $email.</p>";
+                    $message .= "<p>Before you can login, please <a href=\"$confUrl\">click here to confirm registration</a></p>";
                     $message .= "<p>If the link above doesn't work, copy this address into your browser: $confUrl</p>";
                     # change this to whatever message you want to send from Algonquin College
                     $message .= "<p>Thank you, Team Slowpd.</p>";
@@ -133,8 +147,8 @@ else if (isset($_POST['submit'])) {
             <div class="col-sm-5">
                <select class="form-control" name="emaildomain" required>
                    <option value="">-- Select email domain --</option>
-                   <option value="algonquinlive.com"<? if ($emaildomain == 'algonquinlive.com') echo " selected"; ?>>algonquinlive.com (student)</option>
-                   <option value="algonquincollege.com"<? if ($emaildomain == 'algonquincollege.com') echo " selected"; ?>>algonquincollege.com (teacher)</option>
+                   <option value="algonquinlive.com"<?php if ($emaildomain == 'algonquinlive.com') echo " selected"; ?>>algonquinlive.com (student)</option>
+                   <option value="algonquincollege.com"<?php if ($emaildomain == 'algonquincollege.com') echo " selected"; ?>>algonquincollege.com (teacher)</option>
                </select>
             </div>
        </div>

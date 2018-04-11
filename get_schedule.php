@@ -1,4 +1,12 @@
 <?php
+/*
+get_schedule.php
+Created by Dave Sampson
+Modified by Slowpd
+
+This page cannot be visited; it is only fetched by AJAX post from schedule_viewer.php when a student is viewing a teacher's schedule. This is done so that the student can press the "Next Week" and "Previous Week" buttons and the schedule can change without refreshing the page; the page contents are dynamically inserted into the existing DOM via JavaScript.
+*/
+
 if ($_POST == [])   # page wasn't reached by AJAX POST from schedule_viewer.php
     header('Location:student_cp.php');
 

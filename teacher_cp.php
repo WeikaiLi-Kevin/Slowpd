@@ -1,4 +1,12 @@
 <?php
+/*
+teacher_cp.php
+Created by Weikai Li
+Modified by Slowpd
+
+This is the home page or portal for teachers. This page is reached automatically when a teacher logs in. This page allows teachers to create or edit their availability schedule, either using an online editor, or by uploading a compatible schedule file. A list of upcoming appointments also appears, if applicable. Teachers can accept or reject pending appointments, or cancel accepted appointments. If they do so, a dialog pops up that allows them to send a note to the student, which is sent to the student's email address.
+*/
+
 include 'session_include.php';
 session_check('teacher');
 ?>
@@ -123,6 +131,12 @@ else {
 include 'footer.php';
 ?>
 <script type="text/javascript">
+/*
+Function popupModal
+Created by Weikai Li
+
+This function pops up a dialog that allows the teacher to write a note to the student when accepting, rejecting, or cancelling an appointment. Coded in jQuery.
+*/
 function popupModal(e){
     var vars = $(e).parent().attr('id').split('_'); // creates an array [firstname, lastname, apptId, date, time]
     var action = $(e).val();

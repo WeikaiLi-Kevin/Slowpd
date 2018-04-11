@@ -1,4 +1,14 @@
 <?php
+/*
+student_cp.php
+Created by Weikai Li
+Modified by Slowpd
+
+This is the home page or portal for students. This page is reached automatically when a student logs in. This page allows students to search for teachers, whereafter they can view the teacher's schedule and request an appointment if they don't already have an appointment pending or accepted with that teacher. A list of upcoming appointments also appears, if applicable. Students can cancel upcoming appointments from the list.
+
+The search form POSTs to this page. When the page is reached by POST, the database is searched for teachers who match the first name, last name, or email address entered in the form.
+*/
+
 include 'session_include.php';
 session_check('student');
 ?>

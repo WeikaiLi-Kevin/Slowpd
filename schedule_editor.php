@@ -1,4 +1,14 @@
 <?php
+/*
+schedule_editor.php
+Created by Mahad Osman
+Modified by Slowpd
+
+This page allows teachers to create an edit a schedule of availability. It is a template for the entire semester, not a schedule of specific dates; typically, teachers have the same office hours and teaching schedule every week.
+
+This page takes a JSON file that is stored on the server, or one that has been uploaded by the teacher (perhaps from a USB key), and creates a user interface with a list of days and times, divided into half hour blocks. Teachers can then toggle each time slot between Available and Unavailable by clicking on the button in each slow. The schedule is saved as a JSON string in a file called template.json in a folder whose name matches the teacher's user id (the first part of email@algonquincollege.com). Teachers can also save other miscellaneous information (so far, just the room number where they have office hours). This information is saved as a JSON string in a file called config.json in the same folder as template.json.
+*/
+
 include 'session_include.php';
 session_check('teacher');
 ?>
@@ -129,6 +139,12 @@ include 'footer.php';
 var week = <?=$jsonweek?>;
 var config = <?=$jsonconfig?>;
 
+/*
+Function flipAvailability
+Created by Mahad Osman
+
+This function toggles the teacher's availability from Available to Unavailable and vice versa. This change is displayed on the button, but also updates the corresponding time block in the "week" object, which represents the teacher's schedule, so that it can be saved to template.json when the user presses Save. Coded in jQuery.
+*/
 function flipAvailability(e) {
     var parent_id = $(e).parent().attr('id');
     var availability = $(e).val();
@@ -155,7 +171,13 @@ function flipAvailability(e) {
         week[day][parent_id]['status'] = '';
     }
 }
-    
+
+/*
+Function saveSchedule
+Created by Mahad Osman
+
+This function sends two JavaScript objects -- week and config -- which represent the teacher's schedule and meeting room, via AJAX POST to save_schedule.php to be saved in template.json and config.json, respectively.
+*/
 function saveSchedule() {
     config.meetingroom = $('#meetingroom').val();
 

@@ -1,4 +1,12 @@
 <?php
+/*
+confirm_appointment.php
+Created by Dave Sampson
+Modified by Slowpd
+
+This page is reached by POST when a student requests an appointment with a teacher from schedule_viewer.php. An email is sent to the teacher with the student's notes.
+*/
+
 include 'session_include.php';
 session_check('student');
 
@@ -65,7 +73,7 @@ $message .= '</body>';
 $message .= '</html>';
 $headers = "MIME-Version: 1.0\r\n";
 $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-$headers .= "From: patt0108@algonquinlive.com";  # <-- change to administrative email address
+$headers .= "From: $EMAIL_FROM";
 
 mail($to,$subject,$message,$headers);
 ?>

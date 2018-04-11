@@ -1,4 +1,12 @@
 <?php
+/*
+action_appointment.php
+Created by Philip Deck
+Modified by Slowpd
+
+This page is reached by POST from teacher_cp.php when a teacher accepts, rejects, or cancels an appointment. An email is sent with the teacher's notes in any of these events.
+*/
+
 include 'session_include.php';
 session_check('teacher');
 

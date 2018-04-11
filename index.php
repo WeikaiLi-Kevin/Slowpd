@@ -1,7 +1,23 @@
 <?php
+/*
+index.php
+Created by Jie Wang
+Modified by Philip Deck
+
+This is the login page for the application. It is reached by default if no page is specified in the address bar. Users are brought here automatically when they log out.
+
+The login form POSTs to this page. If the page is reached by POST, the form is validated. If the form validates, the page attempts to log the user in and redicrects them to the the control panel for their user type.
+*/
+
 # do not use include 'session_include.php' or it will redirect in an infinte loop!
 session_start();
 
+/*
+Function redirect
+Created by Jie Wang
+
+This function automatically redirects a user to the control panel for their user type.
+*/
 function redirect(){
     if (isset($_SESSION['usertype'])) {
         if ($_SESSION['usertype'] == 'admin') {
@@ -75,7 +91,7 @@ if (isset($_POST['submit'])) {
     <form class="form-horizontal" method="post" action="index.php" style="max-width: 50%">
         <div class="form-group">
             <label class="col-sm-4 control-label" for="username">Username:</label>
-            <div class="col-sm-8"><input name="username" id="username" class="form-control" value="<?=$username?>" required></div>
+            <div class="col-sm-8"><input name="username" id="username" class="form-control" value="<?=$username?>" placeholder="The first part of your Algonquin email address" required></div>
         </div>
 		<div class="form-group">
 		    <label class="col-sm-4 control-label" for="password">Password:</label>
@@ -85,9 +101,6 @@ if (isset($_POST['submit'])) {
     </form>
     <br>
     <p>Not registered? Register <a href="register.php">here</a>.</p>
-	
-	
-	
 </div>
 <?php
 include 'footer.php';

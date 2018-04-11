@@ -1,4 +1,12 @@
 <?php
+/*
+create_users.php
+Created by Harvey Patterson
+Modified by Slowpd
+
+This page allows administrators to create users, reached from admin_cp.php. This is the only way to create administrators (although it's possible to change the usertype of a student or teacher to administrator). Other than creating admins, this page will most likely be used when a user is having difficulty registering, or to create a user without the usual restrictions on email address, password strength, or duplicate accounts (perhaps for testing).
+*/
+
 include 'session_include.php';
 session_check('admin');
 ?>
@@ -93,9 +101,9 @@ if (isset($_POST['submit'])) {
             <div class="col-sm-8">
                <select class="form-control" name="usertype" id="usertype" required>
                    <option value="">-- Select user type --</option>
-                   <option value="student"<? if ($usertype == 'student') echo " selected"; ?>>student</option>
-                   <option value="teacher"<? if ($usertype == 'teacher') echo " selected"; ?>>teacher</option>
-                   <option value="admin"<? if ($usertype == 'admin') echo " selected"; ?>>admin</option>
+                   <option value="student"<?php if ($usertype == 'student') echo " selected"; ?>>student</option>
+                   <option value="teacher"<?php if ($usertype == 'teacher') echo " selected"; ?>>teacher</option>
+                   <option value="admin"<?php if ($usertype == 'admin') echo " selected"; ?>>admin</option>
                </select>
             </div>
        </div>

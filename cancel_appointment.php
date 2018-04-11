@@ -1,4 +1,12 @@
 <?php
+/*
+cancel_appointment.php
+Created by Philip Deck
+Modified by Slowpd
+
+This page is reached by POST when a student cancels an appointment from student_cp.php.
+*/
+
 include 'session_include.php';
 session_check('student');
 

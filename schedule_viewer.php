@@ -1,4 +1,13 @@
 <?php
+/*
+schedule_viewer.php
+Created by Dave Sampson
+Modified by Slowpd
+
+This page allows students to see a teacher's schedule and request appointments with them during the teacher's office hours. The teacher's office hours (availability to meet) are stored in a file called template.json in the teacher's folder in prefs. The schedule goes from Monday to Friday, from 8 am to 6 pm, and is divided into 30 minute blocks, 100 in total. Blocks that are in the past cannot be booked. Blocks where a teacher has not indicated availability cannot be booked. Blocks where a teacher already has a pending or confirmed appointment cannot be booked. Blocks where a teacher has indicated weekly availability, which have not yet been requested by another student, can be requested by clicking the "Request Appt" button for that time and date. This pops up a dialog with information about the appointment, and the student can indicate which course they wish to discuss, and
+write a note about what they want to discuss. This information is emailed to the teacher.
+*/
+
 include 'session_include.php';
 session_check('student');
 ?>
@@ -7,9 +16,7 @@ session_check('student');
 <head>
     <title>Appointment Scheduler</title>
 <style>
-	td {
-   height: 51px;
-}
+	td { height: 51px; }
 </style>
 <?php
 include 'header.php';
@@ -93,6 +100,12 @@ if (file_exists($filename) && file_exists($filename2)) {
 monday = <?=$mon * 1000?>; // * 1000 because JavaScript tracks time in milliseconds since Unix epoch, PHP uses seconds
 getCalendar();
 
+/*
+Function getCalendar
+Created by Dave Sampson
+
+This function sends a date, teacher' user ID, and teacher's real name via AJAX POST to get_schedule.php. get_schedule creates an availability calendar for the week starting at the date supplied in the date variable, and the contents are added to the DOM for this page.
+*/
 function getCalendar(){
     var xmlhttp = new XMLHttpRequest();
 
@@ -106,6 +119,12 @@ function getCalendar(){
     xmlhttp.send('date=' + Math.floor(monday/1000) + '&prof=<?=$prof?>&profname=<?=$profName?>'); 
 }
 
+/*
+Function popupModal
+Created by Dave Sampson
+
+This function pops up a dialog with details of the timeslot the student wishes to book, and allows the user to indicate a course they wish to discuss and add notes about the meeting. Coded in jQuery.
+*/
 function popupModal(e){
     var parent_id = $(e).parent().attr('id');
     $('#appt').val(parent_id);

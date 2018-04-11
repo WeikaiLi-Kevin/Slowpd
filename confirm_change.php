@@ -1,4 +1,12 @@
 <?php
+/*
+confirm_change.php
+Created by Harvey Patterson
+Modified by Slowpd
+
+This page is reached by POST from modify_user.php when an administrator makes a change to a user's first name, last name, email address, or user type.
+*/
+
 include 'session_include.php';
 session_check('admin');
 

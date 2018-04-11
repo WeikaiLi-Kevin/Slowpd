@@ -1,4 +1,12 @@
 <?php
+/*
+delete_user.php
+Created by Harvey Patterson
+Modified by Slowpd
+
+This page is reached by POST from modify_user.php when an administrator deletes a user.
+*/
+
 include 'session_include.php';
 session_check('admin');
 

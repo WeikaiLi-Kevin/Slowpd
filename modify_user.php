@@ -1,4 +1,12 @@
 <?php
+/*
+modify_user.php
+Created by Harvey Patterson
+Modified by Slowpd
+
+This page is reached by POST from admin_cp.php when an administrator searches for users and clicks the "Modify" button for a specific user in the search result. This page allows the admin to change the user's name, email address, and user type.
+*/
+
 include 'session_include.php';
 session_check('admin');
 
@@ -65,9 +73,9 @@ if ($result->num_rows == 1) {
               <div class="col-sm-8">
                   <select class="form-control" name="usertype" required>        
                   <option value="">-- Select user type --</option>
-                   <option value="student"<? if ($row['UserType'] == 'student') echo " selected"; ?>>student</option>
-                   <option value="teacher"<? if ($row['UserType'] == 'teacher') echo " selected"; ?>>teacher</option>
-                   <option value="admin"<? if ($row['UserType'] == 'admin') echo " selected"; ?>>admin</option>
+                   <option value="student"<?php if ($row['UserType'] == 'student') echo " selected"; ?>>student</option>
+                   <option value="teacher"<?php if ($row['UserType'] == 'teacher') echo " selected"; ?>>teacher</option>
+                   <option value="admin"<?php if ($row['UserType'] == 'admin') echo " selected"; ?>>admin</option>
                </select>                  
             </div>
        </div>
